@@ -58,7 +58,15 @@
     </script>
 
     @yield('script')
-
+    <style>
+        #dataTables-example th{
+            text-align: center;
+        }
+        #dataTables-example td{
+            text-align: left;
+        }
+        
+    </style>
 </head>
 
 <body>

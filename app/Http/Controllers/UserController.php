@@ -4,84 +4,100 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\CongVan;
 
 class UserController extends Controller {
 	//
-	public function getDanhSach() {
-		$user = User::all();
-		return view('admin.user.danhsach', ['user' => $user]);
-	}
 
-	public function getThem() {
-		return view('admin.user.them');
-	}
+	
+	public function getDanhSach()
+{
+    $user = User::whereIn('role', ['officer', 'sofficer'])->get();  // Lọc theo role 'officer' hoặc 'sofficer'
+    return view('admin.danhmuc.nguoiky', ['user' => $user]);
+}
 
-	public function postThem(Request $request) {
-		$this->validate($request,
-			[
-				'name' => 'required|min:3|max:30',
-				'email' => 'required|unique:users,email',
-				'password' => 'required|min:6|max:20',
-				'passwordAgain' => 'same:password',
-			],
-			[
-				'name.required' => 'Bạn phải nhập tên người dùng',
-				'email.required' => 'Bạn phải email',
-				'email.unique' => 'Email đã tồn tại',
-				'passsword.min' => 'Bạn phải nhập mật khẩu lớn hơn, từ 6 đến 20 ký tự',
-				'passsword.max' => 'Bạn phải nhập mật khẩu nhỏ hơn, từ 6 đến 20 ký tự',
-				'passwordAgain.min' => 'Bạn phải nhập mật khẩu lớn hơn, từ 6 đến 20 ký tự',
-				'passwordAgain.max' => 'Bạn phải nhập mật khẩu nhỏ hơn, từ 6 đến 20 ký tự',
-			]);
+	public function getThem()
+    {
+        $user = User::all();
+        return view('admin.danhmuc.nguoiky', ['user' => $user]);
+    }
+
+    // Xử lý thêm mới
+	public function postThem(Request $request)
+	{
+		$this->validate($request, [
+			'Ten' => 'required|unique:users,name|min:3|max:30',
+		], [
+			'Ten.required' => 'Bạn phải nhập tên người ký',
+			'Ten.unique' => 'Tên người ký đã tồn tại',
+			'Ten.min' => 'Tên phải từ 3 đến 30 ký tự',
+			'Ten.max' => 'Tên phải từ 3 đến 30 ký tự',
+		]);
+	
+		// Tạo mới người dùng và gán giá trị 'role' là 'officer'
 		$user = new User;
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = bcrypt($request->password);
-		$user->level = $request->level;
+		$user->name = $request->Ten;
+		  // Gán role mặc định là 'officer'
+		$user->email = '';    
+		    // Email rỗng hoặc bạn có thể bỏ qua nếu không cần
+		$user->level = '1';        // Level rỗng hoặc bạn có thể bỏ qua nếu không cần
+		$user->password = bcrypt('123456'); // Mã hóa mật khẩu mặc định là '123456'
+		$user->remember_token = ''; 
+		$user->role = 'officer';// Nếu không cần nhớ token, có thể để rỗng hoặc bỏ qua
 		$user->save();
 
-		return redirect('admin/user/them')->with('thongbao', 'Thêm thành công');
-
+			
+		return redirect('admin/danhmuc/nguoiky/them')->with('thongbao', 'Thêm thành công');
 	}
+	
 
-	public function getSua($id) {
-		$user = User::find($id);
+	public function getSua($id)
+    {
+    $user_list = User::all(); // Lấy toàn bộ danh sách để hiển thị bảng
+    $user_edit = User::find($id); // Bản ghi cần sửa
 
-		return view('admin.user.sua', ['user' => $user]);
-	}
+    return view('admin.danhmuc.nguoiky', [
+        'user' => $user_list, // Cho bảng danh sách
+        'user_edit' => $user_edit // Dữ liệu form sửa
+    ]);
+    }
 
-	public function postSua(Request $request, $id) {
-		$user = User::find($id);
-		//xử lý validate khi checkbox = true
+    // Xử lý sửa
+    public function postSua(Request $request, $id)
+    {
+        $user = User::find($id);
 
-		$this->validate($request,
-			[
-				'name' => 'required|min:3|max:30',
-			],
-			[
-				'name.required' => 'Bạn phải nhập tên người dùng',
-			]);
+        $this->validate($request, [
+            'Ten' => 'required|unique:users,name,' . $id . '|min:3|max:30',
+        ], [
+            'Ten.required' => 'Bạn phải nhập tên đơn vị',
+            'Ten.unique' => 'Tên độ khẩn đã tồn tại',
+            'Ten.min' => 'Tên phải từ 3 đến 30 ký tự',
+            'Ten.max' => 'Tên phải từ 3 đến 30 ký tự',
+        ]);
 
-		$user->name = $request->name;
-		if ($request->changePassword) {
-			$user->password = bcrypt($request->password);
-		}
+        $user->name = $request->Ten;
+        $user->save();
 
-		$user->level = $request->level;
-		//$user->created_at = $user->created_at;
-		// $user->updated_at = timestamps();
-		$user->save();
+        return redirect('admin/danhmuc/nguoiky/sua/' . $id)->with('thongbao', 'Sửa thành công');
+    }
 
-		return redirect('admin/user/sua/' . $id)->with('thongbao', 'Sửa thành công');
-	}
 
-	public function getXoa($id) {
-		$coquanbanhanh = User::find($id);
-		$coquanbanhanh->delete();
+	public function getXoa($id)
+    {
+        $user = User::find($id);
 
-		return redirect('admin/user/danhsach')->with('thongbao', 'Xoá thành công');
-	}
+        // Kiểm tra khóa ngoại
+        $kiemtrakhoangoai = CongVan::where('idloaivanban', $id)->count();
 
+        if ($kiemtrakhoangoai > 0) {
+            return redirect('admin/danhmuc/nguoiky')->with('loi', 'Không được phép xoá vì có ' . $kiemtrakhoangoai . ' công văn đang sử dụng.');
+        }
+
+        $user->delete();
+
+        return redirect('admin/danhmuc/nguoiky')->with('thongbao', 'Xoá thành công');
+    }
 	public function getDangnhapAdmin() {
 		return view('admin.login');
 	}

@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách Người dùng
+Danh sách Người ký
 @endsection
 @section('content')
 
@@ -9,8 +9,8 @@ Danh sách Người dùng
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Người dùng
-                            <small>danh sách</small>
+                        <h1 class="page-header">Người ký
+                        
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -23,7 +23,18 @@ Danh sách Người dùng
                     @endif
 
                     @if(session('thongbao'))
-                        <div class="alert alert-success">{{ session('thongbao') }}</div>
+                          <div id="alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                                          {{ session('thongbao') }}
+                             </div>
+
+                                  <script>
+                          setTimeout(function() {
+                         var alert = document.getElementById('alert-success');
+                               if (alert) {
+                                alert.style.display = 'none';
+                            }
+                        }, 2000); // 2000ms = 2 giây
+                            </script>
                     @endif
                     @if(session('loi'))
                         <div class="alert alert-success">{{ session('loi') }}</div>
@@ -33,10 +44,6 @@ Danh sách Người dùng
                             <tr align="center">
                                 <th>ID</th>
                                 <th>Tên</th>
-                                <th>email</th>
-                                <th>Quyền</th>
-                                <th>Ngày tạo</th>
-                                <th>Ngày sửa</th>
                                 <th>Xoá</th>
                                 <th>Sửa</th>
                             </tr>
@@ -60,23 +67,8 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                 <tr class="odd gradeX" align="center">
                                     <td>{{ $i }}</td><?php $i++;?>
                                     <td>{{ $usr->name }}</td>
-                                    <td>{{ $usr->email }}</td>
-
-                                    @switch($usr->role)
-                                        @case(1)
-                                            <td>Phó hiệu trưởng</td>
-                                            @break
-                                        @case(2)
-                                            <td>Hiệu trưởng</td>
-                                            @break
-                                        @default
-                                            <td>Nhân viên</td>
-                                    @endswitch
-
-                                    <td>{{ $usr->created_at }}</td>
-                                    <td>{{ $usr->updated_at }}</td>
-                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/user/xoa/{{ $usr->id }}">Xoá</a></td>
-                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/user/sua/{{ $usr->id }}">Sửa</a></td>
+                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/danhmuc/nguoiky/xoa/{{ $usr->id }}">Xoá</a></td>
+                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/danhmuc/nguoiky/sua/{{ $usr->id }}">Sửa</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -85,6 +77,17 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+            <form action="{{ isset($user_edit) ? 'admin/danhmuc/nguoiky/sua/' . $user_edit->id : 'admin/danhmuc/nguoiky/them' }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label>{{ isset($user_edit) ? 'Sửa người ký' : 'Thêm người ký' }}</label>
+                    <input class="form-control" name="Ten" placeholder="Nhập tên người ký" style="width: 40%;"
+                           value="{{ isset($user_edit) ? $user_edit->name : '' }}" />
+                </div>
+            
+                <button type="submit" class="btn btn-default">{{ isset($user_edit) ? 'Cập nhật' : 'Thêm' }}</button>
+                <a href="{{ url('admin/danhmuc/nguoiky') }}" class="btn btn-default">Làm mới</a>
+            </form>
         </div>
         <!-- /#page-wrapper -->
 

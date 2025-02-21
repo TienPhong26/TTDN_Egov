@@ -91,6 +91,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
 		Route::get('donvi/xoa/{id}', 'DanhmucController@getXoaDonvi');
 
+
 		
 	});
 
@@ -106,16 +107,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('linhvuc/xoa/{id}', 'LinhVucController@getXoa');
 	});
 
-	Route::group(['prefix' => 'loaivanban'], function () {
-		Route::get('danhsach', 'LoaiVanBanController@getDanhSach');
+	Route::group(['prefix' => 'danhmuc'], function () {
+		Route::get('loaivanban', 'LoaiVanBanController@getDanhSach');
 
-		Route::get('sua/{id}', 'LoaiVanBanController@getSua');
-		Route::post('sua/{id}', 'LoaiVanBanController@postSua');
+		Route::get('loaivanban/sua/{id}', 'LoaiVanBanController@getSua');
+		Route::post('loaivanban/sua/{id}', 'LoaiVanBanController@postSua');
 
-		Route::get('them', 'LoaiVanBanController@getThem');
-		Route::post('them', 'LoaiVanBanController@postThem');
+		Route::get('loaivanban/them', 'LoaiVanBanController@getThem');
+		Route::post('loaivanban/them', 'LoaiVanBanController@postThem');
 
-		Route::get('xoa/{id}', 'LoaiVanBanController@getXoa');
+		Route::get('loaivanban/xoa/{id}', 'LoaiVanBanController@getXoa');
 	});
 
 	Route::group(['prefix' => 'loaihinhcongvan'], function () {
@@ -142,16 +143,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('xoa/{id}', 'CongVanController@getXoa');
 	});
 
-	Route::group(['prefix' => 'user'], function () {
-		Route::get('danhsach', 'UserController@getDanhSach');
+	Route::group(['prefix' => 'danhmuc'], function () {
+		Route::get('nguoiky', 'UserController@getDanhSach');
 
-		Route::get('sua/{id}', 'UserController@getSua');
-		Route::post('sua/{id}', 'UserController@postSua');
+		Route::get('nguoiky/sua/{id}', 'UserController@getSua');
+		Route::post('nguoiky/sua/{id}', 'UserController@postSua');
 
-		Route::get('them', 'UserController@getThem');
-		Route::post('them', 'UserController@postThem');
+		Route::get('nguoiky/them', 'UserController@getThem');
+		Route::post('nguoiky/them', 'UserController@postThem');
 
-		Route::get('xoa/{id}', 'UserController@getXoa');
+		Route::get('nguoiky/xoa/{id}', 'UserController@getXoa');
 	});
 
 	Route::group(['prefix' => 'slide'], function () {

@@ -15,8 +15,19 @@ Danh sách Lĩnh vực
                     </div>
                     <!-- /.col-lg-12 -->
                     @if(session('thongbao'))
-                            <div class="alert alert-success">{{ session('thongbao') }}</div>
-                    @endif
+                    <div id="alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                                    {{ session('thongbao') }}
+                       </div>
+
+                            <script>
+                    setTimeout(function() {
+                   var alert = document.getElementById('alert-success');
+                         if (alert) {
+                          alert.style.display = 'none';
+                      }
+                  }, 2000); // 2000ms = 2 giây
+                      </script>
+              @endif
                     @if(session('loi'))
                             <div class="alert alert-danger">{{ session('loi') }}</div>
                     @endif

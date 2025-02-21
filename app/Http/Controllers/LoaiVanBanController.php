@@ -9,70 +9,88 @@ class LoaiVanBanController extends Controller {
 	//
 	public function getDanhSach() {
 		$loaivanban = LoaiVanBan::all();
-		return view('admin.loaivanban.danhsach', ['loaivanban' => $loaivanban]);
+		return view('admin.danhmuc.loaivanban', ['loaivanban' => $loaivanban]);
 	}
 
-	public function getThem() {
-		return view('admin.loaivanban.them');
-	}
+	public function getThem()
+    {
+        $loaivanban = Loaivanban::all();
+        return view('admin.danhmuc.loaivanban', ['loaivanban' => $loaivanban]);
+    }
 
-	public function postThem(Request $request) {
-		$this->validate($request,
-			[
-				'Ten' => 'required|unique:LoaiVanBan,name|min:3|max:30',
-			],
-			[
-				'Ten.required' => 'Bạn phải nhập tên loại văn bản',
-				'Ten.unique' => 'Tên loại văn bản đã tồn tại',
-				'Ten.min' => 'Bạn phải nhập tên lớn từ 3 đến 30 ký tự',
-				'Ten.max' => 'Bạn phải nhập tên lớn từ 3 đến 30 ký tự',
-			]);
-		$loaivanban = new LoaiVanBan;
+    // Xử lý thêm mới
+    public function postThem(Request $request)
+    {
+		$this->validate($request, [
+			'Ten' => 'required|unique:loaivanban,name|min:3|max:30',
+			'hinhthuc' => 'required|in:vanbandi,vanbanden,vanbannoibo,vanbankhac',  // Kiểm tra giá trị hợp lệ
+		], [
+			'Ten.required' => 'Bạn phải nhập tên độ khẩn',
+			'Ten.unique' => 'Tên độ khẩn đã tồn tại',
+			'Ten.min' => 'Tên phải từ 3 đến 30 ký tự',
+			'Ten.max' => 'Tên phải từ 3 đến 30 ký tự',
+			'hinhthuc.required' => 'Bạn phải chọn hình thức',
+			'hinhthuc.in' => 'Hình thức không hợp lệ',  // Thông báo khi giá trị không hợp lệ
+		]);
+		
+
+        $loaivanban = new Loaivanban;
 		$loaivanban->name = $request->Ten;
-		$loaivanban->TenKhongDau = changeTitle($request->Ten);
+		$loaivanban->hinhthuc = $request->hinhthuc;  // Lưu giá trị "hình thức"
 		$loaivanban->save();
 
-		return redirect('admin/loaivanban/them')->with('thongbao', 'Thêm thành công');
 
-	}
+        return redirect('admin/danhmuc/loaivanban/them')->with('thongbao', 'Thêm thành công');
+    }
+	
 
-	public function getSua($id) {
-		$loaivanban = LoaiVanBan::find($id);
+	public function getSua($id)
+    {
+    $loaivanban_list = Loaivanban::all(); // Lấy toàn bộ danh sách để hiển thị bảng
+    $loaivanban_edit = Loaivanban::find($id); // Bản ghi cần sửa
 
-		return view('admin.loaivanban.sua', ['loaivanban' => $loaivanban]);
-	}
+    return view('admin.danhmuc.loaivanban', [
+        'loaivanban' => $loaivanban_list, // Cho bảng danh sách
+        'loaivanban_edit' => $loaivanban_edit // Dữ liệu form sửa
+    ]);
+    }
 
-	public function postSua(Request $request, $id) {
-		$loaivanban = LoaiVanBan::find($id);
-		$this->validate($request,
-			[
-				'Ten' => 'required|unique:LoaiVanBan,name|min:3|max:30',
-			],
-			[
-				'Ten.required' => 'Bạn phải nhập tên loại văn bản',
-				'Ten.unique' => 'Tên loại văn bản đã tồn tại',
-				'Ten.min' => 'Bạn phải nhập tên lớn từ 3 đến 30 ký tự',
-				'Ten.max' => 'Bạn phải nhập tên lớn từ 3 đến 30 ký tự',
-			]);
+    // Xử lý sửa
+    public function postSua(Request $request, $id)
+    {
+        $loaivanban = Loaivanban::find($id);
 
-		$loaivanban->name = $request->Ten;
-		$loaivanban->TenKhongDau = changeTitle($request->Ten);
-		$loaivanban->save();
+        $this->validate($request, [
+            'Ten' => 'required|unique:loaivanban,name,' . $id . '|min:3|max:30',
+        ], [
+            'Ten.required' => 'Bạn phải nhập tên đơn vị',
+            'Ten.unique' => 'Tên độ khẩn đã tồn tại',
+            'Ten.min' => 'Tên phải từ 3 đến 30 ký tự',
+            'Ten.max' => 'Tên phải từ 3 đến 30 ký tự',
+        ]);
 
-		return redirect('admin/loaivanban/sua/' . $id)->with('thongbao', 'Sửa thành công');
-	}
+        $loaivanban->name = $request->Ten;
+        $loaivanban->save();
 
-	public function getXoa($id) {
-		$loaivanban = LoaiVanBan::find($id);
-		//kiểm tra khoá ngoại trước khi xoá
-		$kiemtrakhoangoai = CongVan::where('idloaivanban', $id)->get();
-		$soluong = count($kiemtrakhoangoai);
-		if ($soluong) {
-			return redirect('admin/loaivanban/danhsach')->with('loi', 'Không được phép xoá danh mục này vì đang có ' . $soluong . ' công văn đang sử dụng danh mục. Vui lòng tìm và xoá toàn bộ những công văn đó trước!');
-		} else {
-			$loaivanban->delete();
-		}
+        return redirect('admin/danhmuc/loaivanban/sua/' . $id)->with('thongbao', 'Sửa thành công');
+    }
 
-		return redirect('admin/loaivanban/danhsach')->with('thongbao', 'Xoá thành công');
-	}
+
+	
+	public function getXoa($id)
+    {
+        $loaivanban = Loaivanban::find($id);
+
+        // Kiểm tra khóa ngoại
+        $kiemtrakhoangoai = CongVan::where('idloaivanban', $id)->count();
+
+        if ($kiemtrakhoangoai > 0) {
+            return redirect('admin/danhmuc/loaivanban')->with('loi', 'Không được phép xoá vì có ' . $kiemtrakhoangoai . ' công văn đang sử dụng.');
+        }
+
+        $loaivanban->delete();
+
+        return redirect('admin/danhmuc/loaivanban')->with('thongbao', 'Xoá thành công');
+    }
 }
+

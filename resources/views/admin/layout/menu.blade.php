@@ -48,7 +48,7 @@
                                     <a href="admin/danhmuc/linhvuc">Lĩnh vực</a>
                                 </li>
                                 <li>
-                                    <a href="admin/danhmuc/loaivb">Loại văn bản</a>
+                                    <a href="admin/danhmuc/loaivanban">Loại văn bản</a>
                                 </li>
                                 <li>
                                     <a href="admin/danhmuc/nguoiky">Người ký</a>
