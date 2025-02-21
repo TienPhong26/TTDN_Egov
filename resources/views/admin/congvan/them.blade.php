@@ -9,8 +9,8 @@ Thêm Công Văn
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Công văn
-                            <small>thêm</small>
+                        <h1 class="page-header">Vào sổ văn bản
+                           
                         </h1>
                     </div>
                     @if(count($errors)>0)

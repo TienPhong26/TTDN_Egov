@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,16 +60,50 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('xoa/{id}', 'HinhThucVanBanController@getXoa');
 	});
 
-	Route::group(['prefix' => 'linhvuc'], function () {
-		Route::get('danhsach', 'LinhVucController@getDanhSach');
+	Route::group(['prefix' => 'danhmuc'], function () {
+		Route::get('dokhan', 'DanhmucController@getDanhSach');
 
-		Route::get('sua/{id}', 'LinhVucController@getSua');
-		Route::post('sua/{id}', 'LinhVucController@postSua');
+		Route::get('dokhan/sua/{id}', 'DanhmucController@getSua');
+		Route::post('dokhan/sua/{id}', 'DanhmucController@postSua');
 
-		Route::get('them', 'LinhVucController@getThem');
-		Route::post('them', 'LinhVucController@postThem');
+		Route::get('dokhan/them', 'DanhmucController@getThem');
+		Route::post('dokhan/them', 'DanhmucController@postThem');
 
-		Route::get('xoa/{id}', 'LinhVucController@getXoa');
+		Route::get('dokhan/xoa/{id}', 'DanhmucController@getXoa');
+		//độ mật
+		Route::get('domat', 'DanhmucController@getDomat');
+
+		Route::get('domat/sua/{id}', 'DanhmucController@getSuaDm');
+		Route::post('domat/sua/{id}', 'DanhmucController@postSuaDm');
+
+		Route::get('domat/them', 'DanhmucController@getThemDm');
+		Route::post('domat/them', 'DanhmucController@postThemDm');
+
+		Route::get('domat/xoa/{id}', 'DanhmucController@getXoaDm');
+		//đơn vị lĩnh vực
+		Route::get('donvi', 'DanhmucController@getDonvi');
+
+		Route::get('donvi/sua/{id}', 'DanhmucController@getSuaDonvi');
+		Route::post('donvi/sua/{id}', 'DanhmucController@postSuaDonvi');
+
+		Route::get('donvi/them', 'DanhmucController@getThemDonvi');
+		Route::post('donvi/them', 'DanhmucController@postThemDonvi');
+
+		Route::get('donvi/xoa/{id}', 'DanhmucController@getXoaDonvi');
+
+		
+	});
+
+	Route::group(['prefix' => 'danhmuc'], function () {
+		Route::get('linhvuc', 'LinhVucController@getDanhSach');
+
+		Route::get('linhvuc/sua/{id}', 'LinhVucController@getSua');
+		Route::post('linhvuc/sua/{id}', 'LinhVucController@postSua');
+
+		Route::get('linhvuc/them', 'LinhVucController@getThem');
+		Route::post('linhvuc/them', 'LinhVucController@postThem');
+
+		Route::get('linhvuc/xoa/{id}', 'LinhVucController@getXoa');
 	});
 
 	Route::group(['prefix' => 'loaivanban'], function () {

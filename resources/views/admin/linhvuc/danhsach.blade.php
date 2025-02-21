@@ -10,7 +10,7 @@ Danh sách Lĩnh vực
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Lĩnh vực
-                            <small>danh sách</small>
+            
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -56,6 +56,17 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                     </table>
                 </div>
                 <!-- /.row -->
+                <form action="{{ isset($linhvuc_edit) ? 'admin/danhmuc/linhvuc/sua/' . $linhvuc_edit->id : 'admin/danhmuc/linhvuc/them' }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="form-group">
+                        <label>{{ isset($linhvuc_edit) ? 'Sửa lĩnh vựa' : 'Thêm lĩnh vực' }}</label>
+                        <input class="form-control" name="Ten" placeholder="Nhập tên lĩnh vực" style="width: 40%;"
+                               value="{{ isset($linhvuc_edit) ? $linhvuc_edit->name : '' }}" />
+                    </div>
+                
+                    <button type="submit" class="btn btn-default">{{ isset($linhvuc_edit) ? 'Cập nhật' : 'Thêm' }}</button>
+                    <a href="{{ url('admin/danhmuc/linhvuc') }}" class="btn btn-default">Làm mới</a>
+                </form>
             </div>
             <!-- /.container-fluid -->
         </div>

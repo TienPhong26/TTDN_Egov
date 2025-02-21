@@ -7,7 +7,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="trangchu">Xin chào, {{ Auth::user()->name }}</a>
+                <img src="https://cdn-001.haui.edu.vn//img/logo-haui-size.png" style="width: 50px;height: 50px; float: left; margin-left: 5px;">
+                <a class="navbar-brand" href="trangchu">Chào, {{ Auth::user()->name }}</a>
             </div>
             <!-- /.navbar-header -->
 

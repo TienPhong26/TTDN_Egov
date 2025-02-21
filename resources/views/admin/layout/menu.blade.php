@@ -16,13 +16,14 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Công văn<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Văn bản đến<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                               
                                 <li>
-                                    <a href="admin/congvan/danhsach">Danh sách công văn</a>
-                                </li>
+                                    <a href="admin/congvan/them">Vào sổ văn bản</a>
+                                </li> 
                                 <li>
-                                    <a href="admin/congvan/them">Thêm công văn</a>
+                                    <a href="admin/congvan/danhsach">Danh sách văn bản</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -31,6 +32,31 @@
 
 
                         @if(Auth::user()->level == 2)
+                        <li>
+                            <a href="admin/danhmuc/"><i class="fa-solid fa-list-ul"></i> Danh mục<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/danhmuc/dokhan">Độ khẩn</a>
+                                </li>
+                                <li>
+                                    <a href="admin/danhmuc/domat">Độ mật</a>
+                                </li>
+                                <li>
+                                    <a href="admin/danhmuc/donvi">Đơn vị lĩnh vực</a>
+                                </li>
+                                <li>
+                                    <a href="admin/danhmuc/linhvuc">Lĩnh vực</a>
+                                </li>
+                                <li>
+                                    <a href="admin/danhmuc/loaivb">Loại văn bản</a>
+                                </li>
+                                <li>
+                                    <a href="admin/danhmuc/nguoiky">Người ký</a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         <li>
                             <a href="admin/coquanbanhanh/danhsach"><i class="fa fa-hospital-o"></i> Cơ quan ban hành<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
