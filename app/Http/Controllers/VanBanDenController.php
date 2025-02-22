@@ -7,6 +7,7 @@ use App\LoaiVanBan;
 use App\Dokhan;
 use App\User;
 use App\Domat;
+use App\NhanYKien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -70,15 +71,26 @@ class VanBanDenController extends Controller {
         $vanban->action = 'pending';
 
     
+        // if ($request->hasFile('FileVanBan')) {
+        //     $file = $request->file('FileVanBan');
+        //     $filename = time() . '_' . $file->getClientOriginalName();
+            
+        //     // Lưu vào thư mục public/upload
+        //    // Storage::putFileAs('public/upload', $file, $filename);
+        //    $file->move(public_path('upload'), $filename);
+
+        //     // Lưu đường dẫn vào database (đảm bảo đúng format URL khi truy cập tệp)
+        //     $vanban->ten_tep =  $filename;
+        // }
         if ($request->hasFile('FileVanBan')) {
             $file = $request->file('FileVanBan');
             $filename = time() . '_' . $file->getClientOriginalName();
-            
-            // Lưu vào thư mục public/upload
-            Storage::putFileAs('public/upload', $file, $filename);
         
-            // Lưu đường dẫn vào database (đảm bảo đúng format URL khi truy cập tệp)
-            $vanban->ten_tep = 'storage/upload/' . $filename;
+            // Lưu trực tiếp vào public/upload
+            $file->move(public_path('upload'), $filename);
+        
+            // Lưu đường dẫn vào DB nếu cần
+            $vanban->ten_tep = 'upload/' . $filename;
         }
         
         
@@ -118,7 +130,7 @@ class VanBanDenController extends Controller {
 
 		$vanbanden->so_hieu = $request->sohieu;
 		$vanbanden->trich_yeu = $request->trichyeu;
-		$vanbanden->nguoi_ky = $request->nguoiky;
+		//$vanbanden->nguoi_ky = $request->nguoiky;
 
 		//$vanbanden->idcoquanbanhanh = intval($request->CoQuanBanHanh);
 		//$vanbanden->idhinhthucvanban = intval($request->HinhThucVanBan);
@@ -162,10 +174,82 @@ class VanBanDenController extends Controller {
 
     public function postPheDuyet(Request $request, $id) {
         $vanbanden = VanBanDen::find($id);
-        $vanbanden->action = 'approved';
-        $vanbanden->id_nguoi_nhan = $request->NguoiNhan;
-        $vanbanden->save();
 
+        if (!$vanbanden) {
+            return redirect()->back()->with('error', 'Văn bản không tồn tại');
+        }
+        
+        $vanbanden->action = 'approved';
+        $vanbanden->id_nguoinhan = $request->nguoinhan;
+        $vanbanden->save();
+        
+        $nguoinhan = User::find($request->nguoinhan); // Tìm người nhận đúng
+        if (!$nguoinhan) {
+            return redirect()->back()->with('error', 'Người nhận không tồn tại');
+        }
+        
+        $nguoinhan->cong_viec = 'xử lý';
+        $nguoinhan->save();
+        
         return redirect('admin/vanbanden/chuyen')->with('thongbao', 'Phê duyệt thành công');
+        
     }
-	}
+
+    //bút phê văn bản
+    public function getDanhSachButPhe() {
+        // Lấy tất cả các bản ghi có cột action là 'pending'
+        
+        $vanbanden = VanBanDen::where('action', 'approved')->get();
+        return view('admin.vanbanden.butphe', ['vanbanden' => $vanbanden]);
+    }
+    public function getPheDuyetVanBan($id) {
+		$vanbanden = VanBanDen::find($id);
+	//	$coquanbanhanh = CoQuanBanHanh::all();
+	//	$hinhthucvanban = HinhThucVanBan::all();
+	//	$linhvuc = LinhVuc::all();
+	//	$loaihinhvanbanden = LoaiHinhVanBanDen::all();
+		$loaivanban = LoaiVanBan::all();
+        $nguoinhan = User::whereIn('role', ['pofficer'])->get();
+
+		return view('admin.vanbanden.pheduyetvanban', ['vanbanden' => $vanbanden, 'nguoinhan' => $nguoinhan]);
+    }
+
+    public function postPheDuyetVanBan(Request $request, $id) {
+        $vanbanden = VanBanDen::find($id);
+    
+        if (!$vanbanden) {
+            return redirect()->back()->with('error', 'Văn bản không tồn tại');
+        }
+    
+        if ($request->has('hoanthanh') && $request->hoanthanh == 'true') {
+            // Xử lý khi người dùng nhấn "Hoàn thành"
+            
+            $vanbanden->action = 'done';
+            $vanbanden->save();
+            
+            // Bạn có thể thêm logic ở đây nếu cần
+            return redirect('admin/vanbanden/butphe')->with('thongbao', 'Hoàn thành');
+        }
+    
+        // Logic phê duyệt thông thường
+        $vanbanden->action = 'next';
+        $vanbanden->id_nguoinhan = $request->nguoinhan;
+        $vanbanden->save();
+    
+        $nguoinhan = User::find($request->nguoinhan); // Tìm người nhận đúng
+        if (!$nguoinhan) {
+            return redirect()->back()->with('error', 'Người nhận không tồn tại');
+        }
+    
+        $nguoinhan->cong_viec = 'xử lý tiếp';
+        $nguoinhan->save();
+    
+        $ykien = new NhanYKien();
+        $ykien->id_nguoinhan = $request->nguoinhan;
+        $ykien->y_kien = $request->ykien;
+        $ykien->save();
+    
+        return redirect('admin/vanbanden/pheduyetvanban')->with('thongbao', 'Phê duyệt thành công');
+    }
+    
+}

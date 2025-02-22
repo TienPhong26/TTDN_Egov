@@ -145,6 +145,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::post('vaosoden', 'VanBanDenController@postThem');
 
 		Route::get('chuyen/xoa/{id}', 'VanBanDenController@getXoa');
+
+		Route::get('butphe', 'VanBanDenController@getDanhSachButPhe');
+
+		Route::get('pheduyetvanban/{id}', 'VanBanDenController@getPheDuyetVanBan')->name('admin.vanbanden.pheduyetvanban');
+
+		Route::post('pheduyetvanban/{id}', 'VanBanDenController@postPheDuyetVanBan');
+
+		Route::post('butphe', 'VanBanDenController@postHoanThanh');
 	});
 	//Route::post('/vanbanden/pheduyet/{id}', [VanBanDenController::class, 'pheDuyet'])->name('vanbanden.pheduyet');
 	//Route::post('/vanbanden/pheduyet/{id}', 'VanBanDenController@pheDuyet')->name('vanbanden.pheduyet');

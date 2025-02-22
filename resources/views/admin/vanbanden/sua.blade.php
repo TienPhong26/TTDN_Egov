@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 
-@section('title', 'Trình Phê Duyệt')
+@section('title', 'Sửa văn bản đến')
 
 @section('content')
 
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Trình Phê Duyệt</h1>
+                    <h1 class="page-header">Sửa văn bản đến</h1>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
             <form action="{{ url('admin/vanbanden/sua/'.$vanbanden->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                {{-- <div class="form-group">
+                <div class="form-group">
                     <label for="sohieu">Số hiệu:</label>
                     <input type="text" class="form-control" id="sohieu" name="sohieu" value="{{ old('sohieu', $vanbanden->so_hieu) }}" required>
                 </div>
@@ -62,17 +62,9 @@
                 {{-- <div class="form-group">
                     <label for="nguoiky">Người ký:</label>
                     <input type="text" class="form-control" id="nguoiky" name="nguoiky" value="{{ old('nguoiky', $vanbanden->nguoi_ky) }}" required>
-                </div> --}} --}}
+                </div> --}}
                 
-                <table>
-                    <tr>
-                        <td>
-                            Số đến
-                            $vanbanden->so_den;
-                        </td>
-                    </tr>
-
-                </table>
+              
 
                 <button type="submit" class="btn btn-primary">Cập nhật</button>
                 <a href="{{ url('admin/vanbanden/chuyen') }}" class="btn btn-default">Hủy</a>

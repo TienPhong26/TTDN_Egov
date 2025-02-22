@@ -102,6 +102,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Trình phê duyệt</button>
+                <a href="{{ url('admin/vanbanden/chuyen') }}" class="btn btn-default" class="btn btn-primary">Quay lại</a>
             </form>
         </div>
     </div>

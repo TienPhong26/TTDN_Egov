@@ -37,5 +37,7 @@ class VanBanDen extends Model {
 	public function donvilinhvuc() {
 		return $this->belongsTo('App\Donvi', 'iddonvilinhvuc', 'id');
 	}
-
+    public function nguoinhan() {
+		return $this->belongsTo('App\User', 'id_nguoinhan', 'id');
+	}
 }
