@@ -131,6 +131,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('xoa/{id}', 'LoaiHinhCongVanController@getXoa');
 	});
 
+	Route::group(['prefix' => 'vanbanden'], function () {
+		Route::get('chuyen', 'VanBanDenController@getDanhSachChuyen');
+
+		Route::get('sua/{id}', 'VanBanDenController@getSua');
+		Route::post('sua/{id}', 'VanBanDenController@postSua');
+
+		Route::get('pheduyet/{id}', 'VanBanDenController@getPheDuyet')->name('admin.vanbanden.pheduyet');
+		//Route::get('/vanbanden/pheduyet/{id}', 'VanBanDenController@showPheDuyetForm')->name('vanbanden.showPheDuyetForm');
+		Route::post('pheduyet/{id}', 'VanBanDenController@postPheDuyet');
+
+		Route::get('vaosoden', 'VanBanDenController@getThem');
+		Route::post('vaosoden', 'VanBanDenController@postThem');
+
+		Route::get('chuyen/xoa/{id}', 'VanBanDenController@getXoa');
+	});
+	//Route::post('/vanbanden/pheduyet/{id}', [VanBanDenController::class, 'pheDuyet'])->name('vanbanden.pheduyet');
+	//Route::post('/vanbanden/pheduyet/{id}', 'VanBanDenController@pheDuyet')->name('vanbanden.pheduyet');
+
+
 	Route::group(['prefix' => 'congvan'], function () {
 		Route::get('danhsach', 'CongVanController@getDanhSach');
 

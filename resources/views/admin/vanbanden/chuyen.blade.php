@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách Công văn
+Danh sách chờ xử lý
 @endsection
 @section('content')
 
@@ -9,8 +9,8 @@ Danh sách Công văn
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Công văn - văn bản
-                            <small>danh sách</small>
+                        <h1 class="page-header">Danh sách văn bản chờ xử lý
+                          
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -45,23 +45,22 @@ Danh sách Công văn
 
                         <thead>
                             <tr align="center">
-                                <th>ID</th>
+                                <th>#</th>
+                                <th>Ngày Đến</th>
+                                <th>Số đến</th>
                                 <th>Số hiệu</th>
-                                <th>Ngày ký</th>
                                 <th>Trích yếu nội dung</th>
                                 <th>Ngày chuyển</th>
-                                <th>Loại hình công văn</th>
-                                <th>Cơ quan ban hành</th>
-                                <th>Hình thức văn bản</th>
-                                <th>Lĩnh vực</th>
-                                <th>Loại văn bản</th>
-                                <th>Xoá</th>
-                                <th>Sửa</th>
+                                <th>Hạn xử lý</th>
+                                <th>Đính kèm</th>
+                                {{-- <th>Nội dung lãnh đạo</th> --}}
+                                <th>Trạng thái</th>
+                                <th></th>   
                             </tr>
                         </thead>
                         <tbody>
 {{-- Kiểm tra dữ liệu của bảng nếu k có thì in ra Bảng hiện có dữ liệu --}}
-@if(count($congvan) == 0)
+@if(count($vanbanden) == 0)
 <tr>Bảng hiện tại chưa có dữ liệu</tr>
 @endif
 
@@ -74,27 +73,37 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
 ?>
 
 
-                            @foreach($congvan as $key => $value)
+                            @foreach($vanbanden as $key => $value)
                                 <tr class="odd gradeX" align="center">
                                     <td>{{ $i }}</td><?php $i++;?>
-                                    <td>{{ $value->sohieu }}</td>
-                                    <td>{{ Carbon\Carbon::parse($value->ngayky)->format('d/m/Y') }}</td>
-                                    <td>{{ $value->trichyeunoidung }}</td>
+                                    <td>{{ $value->ngay_den }}</td>
+                                    <td>{{ $value->so_cong_van_den }}</td>
+                                    <td>{{ $value->so_hieu }}</td>
+                                    <td>{{ $value->ngay_van_ban }}</td>
+                                    <td>{{ $value->trich_yeu }}</td>
+                                    <td>{{ $value->thoi_han_hoan_thanh }}</td>
+                                    <td><a href="{{ asset($value->ten_tep) }}" target="_blank">File</a></td>
+                                    {{-- <td>{{ Carbon\Carbon::parse($value->ngayky)->format('d/m/Y') }}</td>
+                                    <td>{{ $value->trichyeunoidung }}</td> --}}
                                     <!-- kiểm tra ngaychuyen khác null -->
-                                    @if($value->ngaychuyen != '')
+                                    {{-- @if($value->ngaychuyen != '')
                                         <td>{{ Carbon\Carbon::parse($value->ngaychuyen)->format('d/m/Y') }}</td>
                                     @else
                                         <td>-</td>
-                                    @endif
+                                    @endif --}}
 
-                                    <td>{{ $value->loaihinhcongvan->name }}</td>
+                                    {{-- <td>{{ $value->loaihinhvanbanden->name }}</td> --}}
 
-                                    <td>{{ $value->coquanbanhanh->name }}</td>
+                                    {{-- <td>{{ $value->coquanbanhanh->name }}</td>
                                     <td>{{ $value->hinhthucvanban->name }}</td>
                                     <td>{{ $value->linhvuc->name }}</td>
-                                    <td>{{ $value->loaivanban->name }}</td>
-                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/congvan/xoa/{{ $value->id }}">Xoá</a></td>
-                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/congvan/sua/{{ $value->id }}">Sửa</a></td>
+                                  / <td>{{ $value->loaivanban->name }}</td> --}}
+                                    <td>Chờ xử lý</td>
+                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/vanbanden/chuyen/xoa/{{ $value->id }}">Xoá</a></td>
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/chuyen/sua/{{ $value->id }}">Sửa</a></td> --}}
+                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/sua/{{ $value->id }}">Sửa</a></td>
+
+                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/pheduyet/{{ $value->id }}">Trình phê duyệt</a></td>
                                 </tr>
                             @endforeach
 

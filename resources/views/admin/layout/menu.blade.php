@@ -12,26 +12,18 @@
                             </div>
                         </li> -->
                         <li>
+                            <p style="text-align: left;margin: auto;margin-left: 5px; color: cadetblue">Quản lý văn bản</p>
+                        </li>
+                        <li>
                             <a href="trangchu"><i class="glyphicon glyphicon-home"></i> Trang chủ</a>
                         </li>
 
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Văn bản đến<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               
-                                <li>
-                                    <a href="admin/congvan/them">Vào sổ văn bản</a>
-                                </li> 
-                                <li>
-                                    <a href="admin/congvan/danhsach">Danh sách văn bản</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                       
 
 
 
                         @if(Auth::user()->level == 2)
+                        @endif
                         <li>
                             <a href="admin/danhmuc/"><i class="fa-solid fa-list-ul"></i> Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -58,6 +50,76 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="#"><i class="fa-solid fa-down-long"></i>   Văn bản đến<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               
+                                <li>
+                                    <a href="admin/vanbanden/vaosoden">Vào sổ văn bản</a>
+                                </li>
+                                <li>
+                                    <a href="admin/vanbanden/chuyen">Trình chuyển văn bản sổ văn bản</a>
+                                </li> 
+                                <li>
+                                    <a href="admin/vanbanden/butphe">Bút phê văn bản</a>
+                                </li>  
+                                <li>
+                                    <a href="admin/vanbanden/xulyden">Xử lý văn bản</a>
+                                </li>
+                                <li>
+                                    <a href="admin/vanbanden/theodoi">Theo dõi văn bản</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-solid fa-up-long"></i>   Văn bản đi<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               
+                                <li>
+                                    <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
+                                </li> 
+                                <li>
+                                    <a href="admin/vanbandi/danhsachdi">Danh sách văn bản đi</a>
+                                </li>
+                                <li>
+                                    <a href="admin/vanbandi/baocaodi">Báo cáo văn bản đi</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Văn bản nội bộ<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               
+                                <li>
+                                    <a href="admin/vanbannoibo/vaosonoibo">Vào sổ văn bản nội bộ</a>
+                                </li> 
+                                <li>
+                                    <a href="admin/vanbannoibo/danhsachnoibo">Danh sách văn bản nội bộ</a>
+                                </li>
+                                <li>
+                                    <a href="admin/vanbannoibo/baocaonoibo">Báo cáo văn bản nội bộ</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-solid fa-hotel"></i> Báo cáo văn bản<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               
+                                <li>
+                                    <a href="admin/baocao/bcvbden">Báo cáo văn bản đến</a>
+                                </li> 
+                                <li>
+                                    <a href="admin/baocao/bcvbhoanthanh">Văn bản hoàn thành</a>
+                                </li>
+                                <li>
+                                    <a href="admin/baocao/bcvbquahan">Văn bản quá hạn</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        {{-- <li>
                             <a href="admin/coquanbanhanh/danhsach"><i class="fa fa-hospital-o"></i> Cơ quan ban hành<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -142,7 +204,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        @endif
+                         --}}
 
 
 

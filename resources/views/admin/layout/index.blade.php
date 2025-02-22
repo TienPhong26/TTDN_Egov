@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hệ thống quản lý văn bản hành chính">
     <meta name="author" content="Ngô Tiên Phong"">
+    <link rel="icon" type="image/png" href="https://cdn-001.haui.edu.vn//img/logo-haui-size.png">
     <base href="{{ asset('') }}">
     <title>@yield('title') | Hệ thống quản lý văn bản hành chính</title>
 
