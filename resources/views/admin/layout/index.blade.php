@@ -62,6 +62,7 @@
     <style>
         #dataTables-example th{
             text-align: center;
+            vertical-align: bottom;
         }
         #dataTables-example td{
             text-align: left;

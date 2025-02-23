@@ -5,6 +5,8 @@ use App\VanBanDen;
 use App\LinhVuc;
 use App\LoaiVanBan;
 use App\Dokhan;
+use App\Donvi;
+use App\Giaoxuly;
 use App\User;
 use App\Domat;
 use App\NhanYKien;
@@ -249,7 +251,91 @@ class VanBanDenController extends Controller {
         $ykien->y_kien = $request->ykien;
         $ykien->save();
     
-        return redirect('admin/vanbanden/pheduyetvanban')->with('thongbao', 'Phê duyệt thành công');
+        return redirect('admin/vanbanden/pheduyetvanban/'.$id)->with('thongbao', 'Phê duyệt thành công');
     }
+    public function getXuLy($id) {
+		$vanbanden = VanBanDen::find($id);
+        $donvi = Donvi::all();
+	//	$coquanbanhanh = CoQuanBanHanh::all();
+	//	$hinhthucvanban = HinhThucVanBan::all();
+	//	$linhvuc = LinhVuc::all();
+	//	$loaihinhvanbanden = LoaiHinhVanBanDen::all();
+		$loaivanban = LoaiVanBan::all();
+        $nguoinhan = User::whereIn('role', ['pofficer'])->get();
+
+		return view('admin.vanbanden.giaoxuly', ['vanbanden' => $vanbanden, 'nguoinhan' => $nguoinhan, 'donvi' => $donvi]);
+    }
+    public function postXuLy(Request $request, $id) {
+        $vanbanden = VanBanDen::find($id);
+        $xuly = Giaoxuly::find($id);
+        // if (!$vanbanden) {
+        //     return redirect()->back()->with('error', 'Văn bản không tồn tại');
+        // }
     
+        // if ($request->has('hoanthanh') && $request->hoanthanh == 'true') {
+        //     // Xử lý khi người dùng nhấn "Hoàn thành"
+            
+        //     $vanbanden->action = 'done';
+        //     $vanbanden->save();
+            
+        //     // Bạn có thể thêm logic ở đây nếu cần
+        //     return redirect('admin/vanbanden/butphe')->with('thongbao', 'Hoàn thành');
+        // }
+    
+        // Logic phê duyệt thông thường
+        // $vanbanden->action = 'next';
+        // $vanbanden->id_nguoinhan = $request->nguoinhan;
+        $vanbanden->save();
+        $this->validate($request,
+			[
+
+				'butphe' => 'required|min:10|max:100',
+
+			],
+			[
+				//'sohieu.required' => 'Bạn phải nhập số hiệu',
+				//'sohieu.min' => 'Bạn phải nhập số hiệu lớn từ 3 đến 15 ký tự',
+				//'sohieu.max' => 'Bạn phải nhập số hiệu lớn từ 3 đến 15 ký tự',
+
+				'butphe.required' => 'Bạn phải nhập trích yếu nội dung',
+				'butphe.min' => 'Bạn phải nhập trích yếu nội dung lớn từ 20 đến 100 ký tự',
+				'butphe.max' => 'Bạn phải nhập trích yếu nội dung lớn từ 20 đến 100 ký tự',
+
+			]);
+        $xuly = new Giaoxuly();
+        $xuly->id_donvi = $request->donvi;
+        $xuly->but_phe = $request->butphe;
+        $xuly->id_sohieu = $request->id;
+        $xuly->han_xu_ly = $request->han_xu_ly;
+        $xuly->save();
+
+
+
+        // $nguoinhan = User::find($request->nguoinhan); // Tìm người nhận đúng
+        // if (!$nguoinhan) {
+        //     return redirect()->back()->with('error', 'Người nhận không tồn tại');
+        // }
+    
+        // $nguoinhan->cong_viec = 'xử lý tiếp';
+        // $nguoinhan->save();
+    
+        // $ykien = new NhanYKien();
+        // $ykien->id_nguoinhan = $request->nguoinhan;
+        // $ykien->y_kien = $request->ykien;
+        // $ykien->save();
+    
+        return redirect('admin/vanbanden/giaoxuly/'.$id)->with('thongbao', 'Giao xử lý thành công');
+    }
+    public function getHoanThanh() {
+		$vanbanden = VanBanDen::where('action', 'done')->get();
+		// foreach ($vanbanden as $key => $value) {
+		// 	echo "<br>Key:" . $key;
+		// 	echo "<hr>";
+		// 	echo "id:" . $value->id;
+		// 	echo "<hr>";
+		// 	$ten = $value->coquanbanhanh->name;
+		// 	echo "<b>Value: $ten</b>";
+		// }
+		return view('admin.vanbanden.hoanthanh', ['vanbanden' => $vanbanden]);
+	}
 }

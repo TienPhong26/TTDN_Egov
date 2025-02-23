@@ -63,11 +63,9 @@
                                     <a href="admin/vanbanden/butphe">Bút phê văn bản</a>
                                 </li>  
                                 <li>
-                                    <a href="admin/vanbanden/xulyden">Xử lý văn bản</a>
+                                    <a href="admin/vanbanden/hoanthanh">Danh sách văn bản hoàn thành</a>
                                 </li>
-                                <li>
-                                    <a href="admin/vanbanden/theodoi">Theo dõi văn bản</a>
-                                </li>
+                               
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -79,7 +77,7 @@
                                     <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
                                 </li> 
                                 <li>
-                                    <a href="admin/vanbandi/danhsachdi">Danh sách văn bản đi</a>
+                                    <a href="admin/vanbandi/danhsach">Danh sách văn bản đi</a>
                                 </li>
                                 <li>
                                     <a href="admin/vanbandi/baocaodi">Báo cáo văn bản đi</a>

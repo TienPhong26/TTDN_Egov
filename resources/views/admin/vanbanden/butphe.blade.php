@@ -55,6 +55,7 @@ Bút phê văn bản
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Trạng thái</th>
                                 <th></th>   
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,7 +101,7 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                     <td>Chờ xử lý</td>
                                     <td class="center"><a href="admin/vanbanden/pheduyetvanban/{{ $value->id }}"><i class="fa-solid fa-pen"></i></a></td>
                                     {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/chuyen/sua/{{ $value->id }}">Sửa</a></td> --}}
-                                    <td class="center"><a href="admin/vanbanden/sua/{{ $value->id }}"><i class="fa-solid fa-share"></i></a></td>
+                                    <td class="center"><a href="admin/vanbanden/giaoxuly/{{ $value->id }}"><i class="fa-solid fa-share"></i></a></td>
 
                                    
                                 </tr>

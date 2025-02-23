@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách chờ xử lý
+Danh sách văn bản hoàn thành
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@ Danh sách chờ xử lý
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Danh sách văn bản chờ xử lý
+                        <h1 class="page-header">Danh sách văn bản hoàn thành
                           
                         </h1>
                     </div>
@@ -55,9 +55,7 @@ Danh sách chờ xử lý
                                 <th>Đính kèm</th>
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Trạng thái</th>
-                                <th></th>   
-                                <th></th>
-                                <th></th>
+                              
                             </tr>
                         </thead>
                         <tbody>
@@ -100,13 +98,17 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                     <td>{{ $value->hinhthucvanban->name }}</td>
                                     <td>{{ $value->linhvuc->name }}</td>
                                   / <td>{{ $value->loaivanban->name }}</td> --}}
-                                    <td>Chờ xử lý</td>
-                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/vanbanden/chuyen/xoa/{{ $value->id }}">Xoá</a></td>
+                                    <td>Hoàn thành</td>
+                                    {{-- <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/vanbanden/chuyen/xoa/{{ $value->id }}">Xoá</a></td>
                                     {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/chuyen/sua/{{ $value->id }}">Sửa</a></td> --}}
-                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/sua/{{ $value->id }}">Sửa</a></td>
-                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/pheduyet/{{ $value->id }}">Trình phê duyệt</a></td>
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/sua/{{ $value->id }}">Sửa</a></td> --}}
+
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/pheduyet/{{ $value->id }}">Trình phê duyệt</a></td> --}}
                                 </tr>
                             @endforeach
+
+
+
                         </tbody>
                     </table>
                 </div>

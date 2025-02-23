@@ -153,10 +153,30 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::post('pheduyetvanban/{id}', 'VanBanDenController@postPheDuyetVanBan');
 
 		Route::post('butphe', 'VanBanDenController@postHoanThanh');
+
+		
+		Route::get('giaoxuly/{id}', 'VanBanDenController@getXuly')->name('admin.vanbanden.giaoxuly');
+		Route::post('giaoxuly/{id}', 'VanBanDenController@postXuly');
+
+		Route::get('hoanthanh', 'VanBanDenController@getHoanThanh');
 	});
 	//Route::post('/vanbanden/pheduyet/{id}', [VanBanDenController::class, 'pheDuyet'])->name('vanbanden.pheduyet');
 	//Route::post('/vanbanden/pheduyet/{id}', 'VanBanDenController@pheDuyet')->name('vanbanden.pheduyet');
 
+	Route::group(['prefix' => 'vanbandi'], function () {
+		Route::get('vaosodi', 'VanBanDiController@getThem');
+		Route::post('vaosodi', 'VanBanDiController@postThem');
+
+		Route::get('danhsach', 'VanBanDiController@getDanhSach');
+
+		// Route::get('sua/{id}', 'CongVanController@getSua');
+		// Route::post('sua/{id}', 'CongVanController@postSua');
+
+		// Route::get('them', 'CongVanController@getThem');
+		// Route::post('them', 'CongVanController@postThem');
+
+		// Route::get('xoa/{id}', 'CongVanController@getXoa');
+	});
 
 	Route::group(['prefix' => 'congvan'], function () {
 		Route::get('danhsach', 'CongVanController@getDanhSach');
