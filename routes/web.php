@@ -162,7 +162,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 	});
 	//Route::post('/vanbanden/pheduyet/{id}', [VanBanDenController::class, 'pheDuyet'])->name('vanbanden.pheduyet');
 	//Route::post('/vanbanden/pheduyet/{id}', 'VanBanDenController@pheDuyet')->name('vanbanden.pheduyet');
-
+//văn bản đi
 	Route::group(['prefix' => 'vanbandi'], function () {
 		Route::get('vaosodi', 'VanBanDiController@getThem');
 		Route::post('vaosodi', 'VanBanDiController@postThem');
@@ -176,7 +176,36 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		// Route::post('them', 'CongVanController@postThem');
 
 		// Route::get('xoa/{id}', 'CongVanController@getXoa');
+		Route::get('pheduyetdi', 'VanBanDiController@getPheDuyet');
+
+		//Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+		//Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
+
+		Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+//		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
+		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+
+
 	});
+//văn bản nội bộ
+Route::group(['prefix' => 'vanbannoibo'], function () {
+	Route::get('vaosonoibo', 'VanBanNoiBoController@getThem');
+	Route::post('vaosonoibo', 'VanBanNoiBoController@postThem');
+
+	Route::get('danhsach', 'VanBanNoiBoController@getDanhSach');
+
+	// Route::get('sua/{id}', 'CongVanController@getSua');
+	// Route::post('sua/{id}', 'CongVanController@postSua');
+
+	// Route::get('them', 'CongVanController@getThem');
+	// Route::post('them', 'CongVanController@postThem');
+
+	// Route::get('xoa/{id}', 'CongVanController@getXoa');
+	Route::get('pheduyet', 'VanBanNoiBoController@getPheDuyet');
+
+	Route::get('pheduyetnoibo/{id}', 'VanBanNoiBoController@getPheDuyetNoiBo')->name('admin.vanbannoibo.pheduyetnoibo');
+	Route::post('pheduyetnoibo/{id}', 'VanBanNoiBoController@postPheDuyetNoiBo');
+});
 
 	Route::group(['prefix' => 'congvan'], function () {
 		Route::get('danhsach', 'CongVanController@getDanhSach');

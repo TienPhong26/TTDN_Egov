@@ -77,10 +77,10 @@
                                     <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
                                 </li> 
                                 <li>
-                                    <a href="admin/vanbandi/danhsach">Danh sách văn bản đi</a>
+                                    <a href="admin/vanbandi/pheduyetdi">Phê duyệt văn bản đi</a>
                                 </li>
                                 <li>
-                                    <a href="admin/vanbandi/baocaodi">Báo cáo văn bản đi</a>
+                                    <a href="admin/vanbandi/danhsach">Danh sách văn bản đi</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -93,10 +93,10 @@
                                     <a href="admin/vanbannoibo/vaosonoibo">Vào sổ văn bản nội bộ</a>
                                 </li> 
                                 <li>
-                                    <a href="admin/vanbannoibo/danhsachnoibo">Danh sách văn bản nội bộ</a>
+                                    <a href="admin/vanbannoibo/pheduyet">Xử lý văn bản nội bộ</a>
                                 </li>
                                 <li>
-                                    <a href="admin/vanbannoibo/baocaonoibo">Báo cáo văn bản nội bộ</a>
+                                    <a href="admin/vanbannoibo/danhsach">Danh sách văn bản nội bộ</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
