@@ -181,10 +181,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		//Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
 		//Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
 
-		Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+		//Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
 //		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
-		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+		//Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
 
+		Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
+
+		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
 
 	});
 //văn bản nội bộ

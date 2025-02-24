@@ -165,6 +165,6 @@ class VanBanNoiBoController extends Controller
         // $ykien->y_kien = $request->ykien;
         // $ykien->save();
     
-        return redirect('admin/vanbannoibo/pheduyetnoibo/'.$id)->with('thongbao', 'Phê duyệt thành công');
+        return redirect('admin/vanbannoibo/pheduyet')->with('thongbao', 'Phê duyệt thành công');
     }
 }

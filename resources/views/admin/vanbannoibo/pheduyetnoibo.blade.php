@@ -97,34 +97,7 @@
                 </table>
                 <!-- Modal -->
                 <!-- Modal -->
-                <div id="editModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-lg"> <!-- Đổi modal-lg nếu cần form lớn hơn -->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Chỉnh sửa</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editForm">
-                                    <div class="form-group">
-                                        <label >Đơn vị chỉnh sửa:</label>
-                                        <select style="height: 30px" id="donvi" name="donvi">
-                                            <option value=""  disabled selected>Chọn đơn vị</option>
-                                        @foreach ($donvi as $dv )
-                                            <option value="{{ $dv->id }}">{{ $dv->name}}</option>
-                                        @endforeach
-                                        </select>
-                                        <br>
-                                        <label >Yêu cầu chỉnh sửa:</label>
-                                        <textarea id="y_kien" name="y_kien" class="form-control" rows="4"></textarea>
-                                    </div>
-                                    <button type="submit" name="guilai" value="true" class="btn btn-primary">Gửi lại</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+               
 
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-nib"></i> Phê duyệt</button>
                 {{-- <button type="submit" name="hoanthanh" value="true" class="btn btn-success">
@@ -141,7 +114,34 @@
             <br>
             <iframe src="{{ asset($vanbannoibo->ten_file) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
         </div>
-        
+        <div id="editModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg"> <!-- Đổi modal-lg nếu cần form lớn hơn -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Chỉnh sửa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editForm">
+                            <div class="form-group">
+                                <label >Đơn vị chỉnh sửa:</label>
+                                <select style="height: 30px" id="donvi" name="donvi">
+                                    <option value=""  disabled selected>Chọn đơn vị</option>
+                                @foreach ($donvi as $dv )
+                                    <option value="{{ $dv->id }}">{{ $dv->name}}</option>
+                                @endforeach
+                                </select>
+                                <br>
+                                <label >Yêu cầu chỉnh sửa:</label>
+                                <textarea id="y_kien" name="y_kien" class="form-control" rows="4"></textarea>
+                            </div>
+                            <button type="submit" name="guilai" value="true" class="btn btn-primary">Gửi lại</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection

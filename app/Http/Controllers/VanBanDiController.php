@@ -151,6 +151,8 @@ class VanBanDiController extends Controller
         // $ykien->y_kien = $request->ykien;
         // $ykien->save();
     //    dd($request->all());
-        return redirect('admin/vanbandi/pheduyetvbdi/'.$id)->with('thongbao', 'Phê duyệt thành công');
+        return redirect('admin/vanbandi/pheduyetdi')->with('thongbao', 'Phê duyệt thành công');
     }
+
+    
 }

@@ -102,7 +102,26 @@
                 </table>
                 <!-- Modal -->
                 <!-- Modal -->
-                <div id="editModal" class="modal fade" role="dialog">
+          
+
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-nib"></i> Phê duyệt</button>
+
+                {{-- <button type="submit" name="hoanthanh" value="true" class="btn btn-success">
+                    <i class="fa-solid fa-check"></i> Hoàn thành
+                </button> --}}
+
+                <button type="button"  class="btn btn-success" data-toggle="modal" data-target="#editModal">
+                    <i class="fa fa-check"></i> Gửi chỉnh sửa lại
+                </button>
+                              
+                <a href="{{ url('admin/vanbandi/pheduyetdi') }}" class="btn btn-default" class="btn btn-primary"><i class="fa-solid fa-backward"></i> Quay lại</a>
+            </form>
+        </div>
+        <div class="form-group">
+            <br>
+            <iframe src="{{ asset($vanbandi->ten_file) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
+        </div>
+              <div id="editModal" class="modal fade" role="dialog">
                     <div class="modal-dialog modal-lg"> <!-- Đổi modal-lg nếu cần form lớn hơn -->
                         <div class="modal-content">
                             <div class="modal-header">
@@ -129,24 +148,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-nib"></i> Phê duyệt</button>
-                {{-- <button type="submit" name="hoanthanh" value="true" class="btn btn-success">
-                    <i class="fa-solid fa-check"></i> Hoàn thành
-                </button> --}}
-                <button type="button"  class="btn btn-success" data-toggle="modal" data-target="#editModal">
-                    <i class="fa fa-check"></i> Gửi chỉnh sửa lại
-                </button>
-                              
-                <a href="{{ url('admin/vanbandi/pheduyetdi') }}" class="btn btn-default" class="btn btn-primary"><i class="fa-solid fa-backward"></i> Quay lại</a>
-            </form>
-        </div>
-        <div class="form-group">
-            <br>
-            <iframe src="{{ asset($vanbandi->ten_file) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
-        </div>
-        
     </div>
 
 @endsection
