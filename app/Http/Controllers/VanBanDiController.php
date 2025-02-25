@@ -93,6 +93,12 @@ class VanBanDiController extends Controller
         $user = User::all();
         return view('admin.vanbandi.danhsach', ['vanbandi' => $vanbandi, 'user' => $user]);
     }
+    public function getHoanThanh() {
+        // Lấy tất cả các bản ghi có cột action là 'pending'
+        $vanbandi= VanBanDi::where('action', 'done')->get();
+        $user = User::all();
+        return view('admin.vanbandi.hoanthanh', ['vanbandi' => $vanbandi, 'user' => $user]);
+    }
     public function getPheDuyet() {
         // Lấy tất cả các bản ghi có cột action là 'pending'
         $vanbandi= VanBanDi::where('action', 'pending')->get();
@@ -154,5 +160,37 @@ class VanBanDiController extends Controller
         return redirect('admin/vanbandi/pheduyetdi')->with('thongbao', 'Phê duyệt thành công');
     }
 
-    
+    public function downloadFile($id)
+{
+    // Lấy dữ liệu văn bản theo ID
+    $vanban = VanBanDi::find($id);
+
+    if (!$vanban) {
+        return redirect()->back()->with('loi', 'Văn bản không tồn tại');
+    }
+    $nguoiKy = $vanban->nguoiKy ? $vanban->nguoiKy->name : 'Không xác định';
+    // Tạo nội dung file (ví dụ: file .txt)
+    $fileContent = "Ngày Ký: " . $vanban->ngayky . "\n";
+    $fileContent .= "Số hiệu: " . $vanban->so_hieudi . "\n";
+    $fileContent .= "Ngày văn bản: " . $vanban->ngayvanban . "\n";
+    $fileContent .= "Trích yếu nội dung: " . $vanban->trichyeu . "\n";
+    $fileContent .= "Nơi nhận: " . $vanban->noinhan . "\n";
+    $fileContent .= "Người ký: " . $nguoiKy . "\n";
+    $fileContent .= "Ghi chú: " . $vanban->ghichu . "\n";
+
+    // Tạo file .txt
+    $fileName = "vanban_ho_so_{$id}.txt";
+
+    // Trả về file tải về
+    return response()->stream(
+        function () use ($fileContent) {
+            echo $fileContent;
+        },
+        200,
+        [
+            'Content-Type' => 'text/plain', // Loại file là text/plain cho file .txt
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"', // Tên file khi tải về
+        ]
+    );
+}
 }

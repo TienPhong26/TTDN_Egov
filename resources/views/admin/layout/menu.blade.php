@@ -15,15 +15,15 @@
                             <p style="text-align: left;margin: auto;margin-left: 5px; color: cadetblue">Quản lý văn bản</p>
                         </li>
                         <li>
-                            <a href="trangchu"><i class="glyphicon glyphicon-home"></i> Trang chủ</a>
+                            {{-- <a href=""><i class="glyphicon glyphicon-home"></i> Trang chủ</a> --}}
+                            <a href="admin/home"><i class="fa-solid fa-house"></i> Trang chủ</a>
                         </li>
 
                        
 
 
 
-                        @if(Auth::user()->level == 2)
-                        @endif
+                        @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4 ||Auth::user()->level == 5)
                         <li>
                             <a href="admin/danhmuc/"><i class="fa-solid fa-list-ul"></i> Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -45,26 +45,42 @@
                                 <li>
                                     <a href="admin/danhmuc/nguoiky">Người ký</a>
                                 </li>
-
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        @endif
+                      
                         <li>
                             <a href="#"><i class="fa-solid fa-down-long"></i>   Văn bản đến<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               
-                                <li>
-                                    <a href="admin/vanbanden/vaosoden">Vào sổ văn bản</a>
+                               @if (Auth::user()->level == 3 || Auth::user()->level == 2 || Auth::user()->level == 4  )
+                               <li>
+                                   <a href="admin/vanbanden/vaosoden">Vào sổ văn bản</a>
                                 </li>
+                                <li>
+                                    <a href="admin/vanbanden/hoanthanh">Lưu hồ sơ văn bản</a>
+                                 </li>
+                                @endif
+                                @if(Auth::user()->level == 4 || Auth::user()->level == 2 )
                                 <li>
                                     <a href="admin/vanbanden/chuyen">Trình chuyển văn bản sổ văn bản</a>
                                 </li> 
+                                @endif
+                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
                                 <li>
                                     <a href="admin/vanbanden/butphe">Bút phê văn bản</a>
                                 </li>  
                                 <li>
-                                    <a href="admin/vanbanden/hoanthanh">Danh sách văn bản hoàn thành</a>
+                                    <a href="admin/vanbanden/xuly">Văn bản đang xử lý</a>
+                                </li> 
+                                <li>
+                                    <a href="admin/vanbanden/hoanthanh">Văn bản hoàn thành</a>
                                 </li>
+                                <li>
+                                    <a href="admin/vanbanden/quahan">Văn bản quán hạn</a>
+                                </li> 
+                                @endif
                                
                             </ul>
                             <!-- /.nav-second-level -->
@@ -75,33 +91,45 @@
                                
                                 <li>
                                     <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
-                                </li> 
+                                </li>
+                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
                                 <li>
                                     <a href="admin/vanbandi/pheduyetdi">Phê duyệt văn bản đi</a>
                                 </li>
+                                @endif 
+                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
                                 <li>
                                     <a href="admin/vanbandi/danhsach">Danh sách văn bản đi</a>
                                 </li>
+                                @endif
+                                @if(Auth::user()->level == 3 || Auth::user()->level == 3 ||Auth::user()->level == 5)
+                                <li>
+                                    <a href="admin/vanbandi/hoanthanh">Lưu hồ sơ văn bản</a>
+                                </li>
+                                @endif
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Văn bản nội bộ<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               
-                                <li>
-                                    <a href="admin/vanbannoibo/vaosonoibo">Vào sổ văn bản nội bộ</a>
+                               @if(Auth::user()->level == 3 )
+                               <li>
+                                   <a href="admin/vanbannoibo/vaosonoibo">Vào sổ văn bản nội bộ</a>
                                 </li> 
+                                @endif
+                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
                                 <li>
                                     <a href="admin/vanbannoibo/pheduyet">Xử lý văn bản nội bộ</a>
                                 </li>
+                                @endif 
                                 <li>
                                     <a href="admin/vanbannoibo/danhsach">Danh sách văn bản nội bộ</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#"><i class="fa-solid fa-hotel"></i> Báo cáo văn bản<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                
@@ -116,7 +144,7 @@
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>
+                        </li> --}}
                         {{-- <li>
                             <a href="admin/coquanbanhanh/danhsach"><i class="fa fa-hospital-o"></i> Cơ quan ban hành<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

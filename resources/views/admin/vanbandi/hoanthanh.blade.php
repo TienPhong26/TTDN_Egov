@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách văn bản hoàn thành
+Lưu hồ sơ văn bản
 @endsection
 @section('content')
 
@@ -9,8 +9,7 @@ Danh sách văn bản hoàn thành
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Danh sách văn bản hoàn thành
-                          
+                        <h1 class="page-header">Danh sách văn bản đi
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -46,23 +45,23 @@ Danh sách văn bản hoàn thành
                         <thead>
                             <tr align="center">
                                 <th>#</th>
-                                <th>Ngày Đến</th>
-                                <th>Số đến</th>
                                 <th>Số hiệu</th>
+                                <th>Ngày Ký</th>
+                                <th>Ngày Văn Bản</th>
                                 <th>Trích yếu nội dung</th>
-                                <th>Ngày chuyển</th>
-                                <th>Hạn xử lý</th>
+                                <th>Nơi nhận</th>
+                                <th>Người ký</th>
                                 <th>Đính kèm</th>
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
-                                <th>Trạng thái</th>
+                                <th>Ghi chú</th>
                                 @if (auth()->user()->level == 3 || auth()->user()->level == 2)
-                                    <th></th>
+                                <th></th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
 {{-- Kiểm tra dữ liệu của bảng nếu k có thì in ra Bảng hiện có dữ liệu --}}
-@if(count($vanbanden) == 0)
+@if(count($vanbandi) == 0)
 <tr>Bảng hiện tại chưa có dữ liệu</tr>
 @endif
 
@@ -75,30 +74,40 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
 ?>
 
 
-                            @foreach($vanbanden as $key => $value)
-                                <tr class="odd gradeX" align="center">
-                                    <td>{{ $i }}</td><?php $i++;?>
-                                    <td>{{ $value->ngay_den }}</td>
-                                    <td>{{ $value->so_cong_van_den }}</td>
-                                    <td>{{ $value->so_hieu }}</td>
-                                    <td>{{ $value->ngay_van_ban }}</td>
-                                    <td>{{ $value->trich_yeu }}</td>
-                                    <td>{{ $value->thoi_han_hoan_thanh }}</td>
-                                    <td><a href="{{ asset($value->ten_tep) }}" target="_blank">File</a></td>
-                                    <td>Hoàn thành</td>
-                                    @if (auth()->user()->level == 3 || auth()->user()->level == 2)
-                                    <td><a href="{{ route('download.file', ['id' => $value->id]) }}"><i class="fa-solid fa-sd-card"></i> Lưu hồ sơ</a></td>
-                                    @endif
-                                </tr>
-                            @endforeach
+                                @if(is_iterable($vanbandi) && count($vanbandi) > 0)
+                                @foreach($vanbandi as $key => $value)
+                                    <tr class="odd gradeX" align="center">
+                                        <td>{{ $i }}</td><?php $i++; ?>
+                                        <td>{{ $value->so_hieudi }}</td>
+                                        <td>{{ $value->ngayky }}</td>
+                                        <td>{{ $value->ngayvanban }}</td>
+                                        <td>{{ $value->trichyeu }}</td>
+                                        <td>{{ $value->noinhan }}</td>
 
+                                        @if(is_iterable($user))
+                                            @foreach($user as $us)
+                                                @if($us->id == $value->nguoiky)
+                                                    <td>{{ $us->name }}</td>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <td>Không tìm thấy người ký</td>
+                                        @endif
 
-
+                                        <td><a href="{{ asset($value->ten_file) }}" target="_blank">File</a></td>
+                                        <td>{{$value->ghichu}}</td>
+                                        @if (auth()->user()->level == 3 || auth()->user()->level == 2)
+                                        <td><a href="{{ route('download.file', ['id' => $value->id]) }}"><i class="fa-solid fa-sd-card"></i> Lưu hồ sơ</a></td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr><td colspan="7">Không có dữ liệu</td></tr>
+                                @endif
                         </tbody>
                     </table>
                 </div>
                 <!-- /.row -->
-                {{-- <button type="button" class="btn btn-primary">Xuất dữ liệu</button> --}}
             </div>
             <!-- /.container-fluid -->
         </div>

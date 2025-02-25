@@ -5,6 +5,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\CongVan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
 	//
@@ -114,14 +116,31 @@ class UserController extends Controller {
 				'password.min' => 'Bạn phải nhập mật khẩu lớn hơn, từ 6 đến 20 ký tự',
 				'password.max' => 'Bạn phải nhập mật khẩu nhỏ hơn, từ 6 đến 20 ký tự',
 			]
-
 		);
-
-		if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-			return redirect('admin/congvan/danhsach');
-		} else {
-			return redirect('admin/dangnhap')->with('loi', 'Đăng nhập không thành công, mời nhập lại!');
+	
+		$user = DB::table('users')->where('email', $request->email)->first();
+	
+		if ($user) {
+			// Kiểm tra nếu mật khẩu trong DB là MD5
+			if ($user->password === md5($request->password)) {
+				// Cập nhật mật khẩu mới bằng bcrypt
+				DB::table('users')->where('email', $request->email)->update([
+					'password' => Hash::make($request->password)
+				]);
+	
+				// Tiến hành đăng nhập lại
+				if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+					return redirect('admin/home');
+				}
+			} elseif (Hash::check($request->password, $user->password)) {
+				// Nếu mật khẩu đã được bcrypt trước đó, tiến hành đăng nhập bình thường
+				if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+					return redirect('admin/home');
+				}
+			}
 		}
+	
+		return redirect('admin/dangnhap')->with('loi', 'Đăng nhập không thành công, mời nhập lại!');
 	}
 
 	public function getDangxuat() {

@@ -13,6 +13,7 @@ use App\NhanYKien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class VanBanDenController extends Controller {
 	//
@@ -170,7 +171,8 @@ class VanBanDenController extends Controller {
 	//	$linhvuc = LinhVuc::all();
 	//	$loaihinhvanbanden = LoaiHinhVanBanDen::all();
 		$loaivanban = LoaiVanBan::all();
-        $nguoinhan = User::where('role', 'officer')->get();
+       // $nguoinhan = User::where('role', ['sofficer','pofficer'])->get();
+        $nguoinhan = User::whereIn('role', ['sofficer', 'pofficer'])->get();
 		return view('admin.vanbanden.pheduyet', ['vanbanden' => $vanbanden, 'nguoinhan' => $nguoinhan]);
     }
 
@@ -338,4 +340,55 @@ class VanBanDenController extends Controller {
 		// }
 		return view('admin.vanbanden.hoanthanh', ['vanbanden' => $vanbanden]);
 	}
+    public function getVanBanXuly() {
+		$vanbanden = VanBanDen::where('action', 'next')->get();
+		// foreach ($vanbanden as $key => $value) {
+		// 	echo "<br>Key:" . $key;
+		// 	echo "<hr>";
+		// 	echo "id:" . $value->id;
+		// 	echo "<hr>";
+		// 	$ten = $value->coquanbanhanh->name;
+		// 	echo "<b>Value: $ten</b>";
+		// }
+		return view('admin.vanbanden.xuly', ['vanbanden' => $vanbanden]);
+	} 
+    public function getQuaHan() {
+		$vanbanden = VanBanDen::where('thoi_han_hoan_thanh', '<', Carbon::now())->get();
+		
+		return view('admin.vanbanden.quahan', ['vanbanden' => $vanbanden]);
+	}
+
+
+public function downloadFile($id)
+{
+    // Lấy dữ liệu văn bản theo ID
+    $vanban = VanBanDen::find($id);
+
+    if (!$vanban) {
+        return redirect()->back()->with('loi', 'Văn bản không tồn tại');
+    }
+
+    // Tạo nội dung file (ví dụ: file .txt)
+    $fileContent = "Ngày Đến: " . $vanban->ngay_den . "\n";
+    $fileContent .= "Số đến: " . $vanban->so_cong_van_den . "\n";
+    $fileContent .= "Số hiệu: " . $vanban->so_hieu . "\n";
+    $fileContent .= "Trích yếu nội dung: " . $vanban->trich_yeu . "\n";
+    $fileContent .= "Ngày chuyển: " . $vanban->ngay_van_ban . "\n";
+    $fileContent .= "Hạn xử lý: " . $vanban->thoi_han_hoan_thanh . "\n";
+
+    // Tạo file .txt
+    $fileName = "vanban_ho_so_{$id}.txt";
+
+    // Trả về file tải về
+    return response()->stream(
+        function () use ($fileContent) {
+            echo $fileContent;
+        },
+        200,
+        [
+            'Content-Type' => 'text/plain', // Loại file là text/plain cho file .txt
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"', // Tên file khi tải về
+        ]
+    );
+}
 }

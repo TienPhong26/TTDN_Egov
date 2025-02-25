@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', 'PagesController@trangchu');
+Route::get('/', 'UserController@getDangnhapAdmin');
 Route::get('dangnhap', 'PagesController@getDangnhap');
 Route::post('dangnhap', 'PagesController@postDangnhap');
 Route::get('dangxuat', 'PagesController@getDangxuat');
@@ -159,6 +159,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::post('giaoxuly/{id}', 'VanBanDenController@postXuly');
 
 		Route::get('hoanthanh', 'VanBanDenController@getHoanThanh');
+		Route::get('xuly', 'VanBanDenController@getVanBanXuLy');
+		Route::get('quahan', 'VanBanDenController@getQuaHan');
+
+		// routes/web.php
+		Route::get('vanbanden/luuhoso/{id}', 'VanBanDenController@downloadFile')->name('download.file');
+
 	});
 	//Route::post('/vanbanden/pheduyet/{id}', [VanBanDenController::class, 'pheDuyet'])->name('vanbanden.pheduyet');
 	//Route::post('/vanbanden/pheduyet/{id}', 'VanBanDenController@pheDuyet')->name('vanbanden.pheduyet');
@@ -188,7 +194,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('pheduyetvbdi/{id}', 'VanBanDiController@getPheDuyetDi')->name('admin.vanbandi.pheduyetvbdi');
 
 		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
-
+		Route::get('hoanthanh', 'VanBanDiController@getHoanThanh');
+		Route::get('luuhoso/{id}', 'VanBanDiController@downloadFile')->name('download.file');
 	});
 //văn bản nội bộ
 Route::group(['prefix' => 'vanbannoibo'], function () {
@@ -234,27 +241,27 @@ Route::group(['prefix' => 'vanbannoibo'], function () {
 		Route::get('nguoiky/xoa/{id}', 'UserController@getXoa');
 	});
 
-	Route::group(['prefix' => 'slide'], function () {
-		Route::get('danhsach', 'SlideController@getDanhSach');
+	// Route::group(['prefix' => 'slide'], function () {
+	// 	Route::get('danhsach', 'SlideController@getDanhSach');
 
-		Route::get('sua/{id}', 'SlideController@getSua');
-		Route::post('sua/{id}', 'SlideController@postSua');
+	// 	Route::get('sua/{id}', 'SlideController@getSua');
+	// 	Route::post('sua/{id}', 'SlideController@postSua');
 
-		Route::get('them', 'SlideController@getThem');
-		Route::post('them', 'SlideController@postThem');
+	// 	Route::get('them', 'SlideController@getThem');
+	// 	Route::post('them', 'SlideController@postThem');
 
-		Route::get('xoa/{id}', 'SlideController@getXoa');
-	});
+	// 	Route::get('xoa/{id}', 'SlideController@getXoa');
+	// });
 });
 
-Route::get('trangchu', 'PagesController@trangchu');
+Route::get('admin/home', 'HomeController@getThongso');
 
-Route::get('coquanbanhanh/{id}/{TenKhongDau}.html', 'PagesController@coquanbanhanh');
+//Route::get('coquanbanhanh/{id}/{TenKhongDau}.html', 'PagesController@coquanbanhanh');
 
-Route::get('hinhthucvanban/{id}/{TenKhongDau}.html', 'PagesController@hinhthucvanban');
+//Route::get('hinhthucvanban/{id}/{TenKhongDau}.html', 'PagesController@hinhthucvanban');
 
-Route::get('linhvuc/{id}/{TenKhongDau}.html', 'PagesController@linhvuc');
+// Route::get('linhvuc/{id}/{TenKhongDau}.html', 'PagesController@linhvuc');
 
-Route::get('loaivanban/{id}/{TenKhongDau}.html', 'PagesController@loaivanban');
+// Route::get('loaivanban/{id}/{TenKhongDau}.html', 'PagesController@loaivanban');
 
-Route::get('loaihinhcongvan/{id}/{TenKhongDau}.html', 'PagesController@loaihinhcongvan');
+// Route::get('loaihinhcongvan/{id}/{TenKhongDau}.html', 'PagesController@loaihinhcongvan');

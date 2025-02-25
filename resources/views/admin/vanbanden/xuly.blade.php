@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách văn bản hoàn thành
+Danh sách văn bản đang chờ xử lý
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@ Danh sách văn bản hoàn thành
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Danh sách văn bản hoàn thành
+                        <h1 class="page-header">Danh sách văn bản đang xử lý
                           
                         </h1>
                     </div>
@@ -55,9 +55,7 @@ Danh sách văn bản hoàn thành
                                 <th>Đính kèm</th>
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Trạng thái</th>
-                                @if (auth()->user()->level == 3 || auth()->user()->level == 2)
-                                    <th></th>
-                                @endif
+                              
                             </tr>
                         </thead>
                         <tbody>
@@ -85,10 +83,27 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                     <td>{{ $value->trich_yeu }}</td>
                                     <td>{{ $value->thoi_han_hoan_thanh }}</td>
                                     <td><a href="{{ asset($value->ten_tep) }}" target="_blank">File</a></td>
-                                    <td>Hoàn thành</td>
-                                    @if (auth()->user()->level == 3 || auth()->user()->level == 2)
-                                    <td><a href="{{ route('download.file', ['id' => $value->id]) }}"><i class="fa-solid fa-sd-card"></i> Lưu hồ sơ</a></td>
-                                    @endif
+                                    {{-- <td>{{ Carbon\Carbon::parse($value->ngayky)->format('d/m/Y') }}</td>
+                                    <td>{{ $value->trichyeunoidung }}</td> --}}
+                                    <!-- kiểm tra ngaychuyen khác null -->
+                                    {{-- @if($value->ngaychuyen != '')
+                                        <td>{{ Carbon\Carbon::parse($value->ngaychuyen)->format('d/m/Y') }}</td>
+                                    @else
+                                        <td>-</td>
+                                    @endif --}}
+
+                                    {{-- <td>{{ $value->loaihinhvanbanden->name }}</td> --}}
+
+                                    {{-- <td>{{ $value->coquanbanhanh->name }}</td>
+                                    <td>{{ $value->hinhthucvanban->name }}</td>
+                                    <td>{{ $value->linhvuc->name }}</td>
+                                  / <td>{{ $value->loaivanban->name }}</td> --}}
+                                    <td>Đang xử lý</td>
+                                    {{-- <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/vanbanden/chuyen/xoa/{{ $value->id }}">Xoá</a></td>
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/chuyen/sua/{{ $value->id }}">Sửa</a></td> --}}
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/sua/{{ $value->id }}">Sửa</a></td> --}}
+
+                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/pheduyet/{{ $value->id }}">Trình phê duyệt</a></td> --}}
                                 </tr>
                             @endforeach
 

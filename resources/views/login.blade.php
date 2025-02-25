@@ -24,7 +24,6 @@
     <style>
         body {
             background-image: url('https://tuyensinh.haui.edu.vn/static/uploads/albumImages/1523862552207.png');
-
         }
     </style>
 </head>

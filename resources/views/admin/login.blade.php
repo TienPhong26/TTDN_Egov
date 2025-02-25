@@ -7,8 +7,8 @@
     <meta name="description" content="Hệ thống quản lý văn bản hành chính">
     <meta name="author" content="Ngô Tiên Phong">
     <base href="{{ asset('') }}">
-
-    <title>Đăng nhập Admin |Hệ thống quản lý văn bản hành chính</title>
+    <link rel="icon" type="image/png" href="https://cdn-001.haui.edu.vn//img/logo-haui-size.png">
+    <title>Đăng nhập |Hệ thống quản lý văn bản hành chính</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,17 +21,22 @@
 
     <!-- Custom Fonts -->
     <link href="admin_asset/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-image: url('https://tuyensinh.haui.edu.vn/static/uploads/albumImages/1523862552207.png');
 
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-5 col-md-offset-0  " style="margin-top: 12%; margin-left: -10%;">
 
                 <div class="login-panel panel panel-default">
-                    <h4 style="text-align: center;font-size: 25px;color: #1a5b20;font-weight: bold;text-transform: uppercase;letter-spacing: 3px;text-shadow: 5px 1px 5px rgba(0, 255, 184, 0.59);">Đăng Nhập<br>Trang Quản Trị</h4>
+                    <h4 style="text-align: center;font-size: 25px;color: #1a5b20;font-weight: bold;text-transform: uppercase;letter-spacing: 3px;text-shadow: 5px 1px 5px rgba(0, 255, 184, 0.59);">Đăng Nhập<br>Quản Lý Văn Hành Chính</h4>
                     @if(count($errors)>0)
                         <div class="alert-danger">
                             @foreach($errors->all() as $err)
@@ -60,7 +65,7 @@
                             </script>
                     @endif
                     <div class="panel-heading">
-                        <h3 class="panel-title">Đăng nhập</h3>
+                        <h3 class="panel-title" style="text-align: center">Đăng nhập</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form" action="admin/dangnhap" method="POST">
