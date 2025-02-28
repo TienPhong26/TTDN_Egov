@@ -69,17 +69,18 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                     </table>
                 </div>
                 <!-- /.row -->
+                @if(Auth::user()->level == 2)
                 <form action="{{ isset($linhvuc_edit) ? 'admin/danhmuc/linhvuc/sua/' . $linhvuc_edit->id : 'admin/danhmuc/linhvuc/them' }}" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <table style="width: 100%;">
                         <tr>
                             <td>
-                                        <div class="form-group">
-                                <label>{{ isset($linhvuc_edit) ? 'Sửa lĩnh vực' : 'Thêm lĩnh vực' }}</label>
-                                <input class="form-control" name="Ten" placeholder="Nhập tên lĩnh vực" style="width: 40%;"
+                                <div class="form-group">
+                                    <label>{{ isset($linhvuc_edit) ? 'Sửa lĩnh vực' : 'Thêm lĩnh vực' }}</label>
+                                    <input class="form-control" name="Ten" placeholder="Nhập tên lĩnh vực" style="width: 40%;"
                                     value="{{ isset($linhvuc_edit) ? $linhvuc_edit->name : '' }}" />
-                            </div>
-                        
+                                </div>
+                                
                             </td>
                             <td>
                                 <div class="form-group">
@@ -87,10 +88,10 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                     <select class="form-control" name="iddonvilinhvuc" style="width: 40%;">
                                         <option value="">-- Chọn Phòng Ban --</option>
                                         @foreach($donvilinhvuc as $dv)
-                                            <option value="{{ $dv->id }}" 
-                                                {{ isset($linhvuc_edit) && $linhvuc_edit->iddonvilinhvuc == $dv->id ? 'selected' : '' }}>
-                                                {{ $dv->name }}
-                                            </option>
+                                        <option value="{{ $dv->id }}" 
+                                            {{ isset($linhvuc_edit) && $linhvuc_edit->iddonvilinhvuc == $dv->id ? 'selected' : '' }}>
+                                            {{ $dv->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -105,9 +106,10 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                     </table>
                     
                     
-                
-                   
+                    
+                    
                 </form>
+                @endif
                 
             </div>
             <!-- /.container-fluid -->

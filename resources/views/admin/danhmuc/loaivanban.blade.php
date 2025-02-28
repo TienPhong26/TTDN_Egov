@@ -72,6 +72,8 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+            @if(Auth::user()->level == 2)
+              
             <form action="{{ isset($loaivanban_edit) ? 'admin/danhmuc/loaivanban/sua/' . $loaivanban_edit->id : 'admin/danhmuc/loaivanban/them' }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <table style="width: 80%;border-collapse: collapse"  >
@@ -106,6 +108,7 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                     </tr>
                 </table>
             </form>
+            @endif
             
         </div>
         <!-- /#page-wrapper -->

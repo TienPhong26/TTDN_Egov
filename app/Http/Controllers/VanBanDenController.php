@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class VanBanDenController extends Controller {
 	//
@@ -202,16 +203,26 @@ class VanBanDenController extends Controller {
     //bút phê văn bản
     public function getDanhSachButPhe() {
         // Lấy tất cả các bản ghi có cột action là 'pending'
-        
-        $vanbanden = VanBanDen::where('action', 'approved')->get();
+        $user = Auth::user();
+        $ngnhan = User::find($user->id);
+        if ($user && ($user->level == 5 || $user->level == 2) ) {
+        // Xử lý logic tại đây
+        $vanbanden = VanBanDen::where('action', 'approved')
+        ->where('id_nguoinhan', $user->id) // Kiểm tra trùng ID người nhận
+        ->get();
         return view('admin.vanbanden.butphe', ['vanbanden' => $vanbanden]);
+        }
+         if ($user && ($user->level == 6 || $user->level == 2) ) {
+        // Xử lý logic tại đây
+        $vanbanden = VanBanDen::where('action', 'next')
+        ->where('id_nguoinhan', $user->id) // Kiểm tra trùng ID người nhận
+        ->get();
+        return view('admin.vanbanden.butphe', ['vanbanden' => $vanbanden]);
+        }
+       
     }
     public function getPheDuyetVanBan($id) {
 		$vanbanden = VanBanDen::find($id);
-	//	$coquanbanhanh = CoQuanBanHanh::all();
-	//	$hinhthucvanban = HinhThucVanBan::all();
-	//	$linhvuc = LinhVuc::all();
-	//	$loaihinhvanbanden = LoaiHinhVanBanDen::all();
 		$loaivanban = LoaiVanBan::all();
         $nguoinhan = User::whereIn('role', ['pofficer'])->get();
 
@@ -237,7 +248,7 @@ class VanBanDenController extends Controller {
     
         // Logic phê duyệt thông thường
         $vanbanden->action = 'next';
-        $vanbanden->id_nguoinhan = $request->nguoinhan;
+        //$vanbanden->id_nguoinhan = $request->nguoinhan;
         $vanbanden->save();
     
         $nguoinhan = User::find($request->nguoinhan); // Tìm người nhận đúng
@@ -247,11 +258,12 @@ class VanBanDenController extends Controller {
     
         $nguoinhan->cong_viec = 'xử lý tiếp';
         $nguoinhan->save();
-    
         $ykien = new NhanYKien();
         $ykien->id_nguoinhan = $request->nguoinhan;
         $ykien->y_kien = $request->ykien;
+        $ykien->id_donvi = $request->id_donvi ?? 32; // Nếu không có, gán giá trị mặc định
         $ykien->save();
+        
     
         return redirect('admin/vanbanden/pheduyetvanban/'.$id)->with('thongbao', 'Phê duyệt thành công');
     }

@@ -116,23 +116,12 @@
                         </td>
                     </tr>
                 </table>
-              
-                
-    
-               
-    
-                
-                {{-- <div class="form-group">
-                    <label>Người nhận</label>
-                    <select class="form-control" name="nguoinhan">
-                        <option value="">--Chọn--</option>
-                        @foreach($nguoinhan as $us)
-                            <option value="{{ $us->id }}">{{ $us->name }}</option>
-                        @endforeach
-                    </select>
-                </div> --}}
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Giao xử lý</button>
                 <a href="{{ url('admin/vanbanden/butphe') }}" class="btn btn-default" class="btn btn-primary">Quay lại</a>
+                <div class="form-group">
+                    <br>
+                    <iframe src="{{ asset($vanbanden->ten_tep) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
+                </div>
             </form>
         </div>
     </div>

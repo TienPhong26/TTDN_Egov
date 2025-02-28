@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', 'UserController@getDangnhapAdmin');
-Route::get('dangnhap', 'PagesController@getDangnhap');
-Route::post('dangnhap', 'PagesController@postDangnhap');
-Route::get('dangxuat', 'PagesController@getDangxuat');
+//Route::get('dangnhap', 'PagesController@getDangnhap');
+//Route::post('dangnhap', 'PagesController@postDangnhap');
+//Route::get('dangxuat', 'PagesController@getDangxuat');
 
 //tìm kiếm
 Route::get('timkiem', 'PagesController@getTimkiem');
 
 //giới thiệu và liên hệ
-Route::get('gioithieu', 'PagesController@getGioithieu');
-Route::get('lienhe', 'PagesController@getLienHe');
+//Route::get('gioithieu', 'PagesController@getGioithieu');
+//Route::get('lienhe', 'PagesController@getLienHe');
 
 //chi tiết công văn
 Route::get('chitiet/{id}', 'PagesController@getChiTiet');
@@ -196,6 +196,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::post('pheduyetvbdi/{id}', 'VanBanDiController@postPheDuyetDi');
 		Route::get('hoanthanh', 'VanBanDiController@getHoanThanh');
 		Route::get('luuhoso/{id}', 'VanBanDiController@downloadFile')->name('download.file');
+
+		Route::get('chuyen', 'VanBanDiController@getChuyen');
+		Route::get('chuyenvbdi/{id}', 'VanBanDiController@getChuyenvbdi')->name('admin.vanbandi.chuyenvbdi');
+		Route::post('chuyenvbdi/{id}', 'VanBanDiController@postChyenvbdi');
 	});
 //văn bản nội bộ
 Route::group(['prefix' => 'vanbannoibo'], function () {

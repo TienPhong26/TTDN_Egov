@@ -77,17 +77,19 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+            @if(Auth::user()->level == 2)
             <form action="{{ isset($user_edit) ? 'admin/danhmuc/nguoiky/sua/' . $user_edit->id : 'admin/danhmuc/nguoiky/them' }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label>{{ isset($user_edit) ? 'Sửa người ký' : 'Thêm người ký' }}</label>
                     <input class="form-control" name="Ten" placeholder="Nhập tên người ký" style="width: 40%;"
-                           value="{{ isset($user_edit) ? $user_edit->name : '' }}" />
+                    value="{{ isset($user_edit) ? $user_edit->name : '' }}" />
                 </div>
-            
+                
                 <button type="submit" class="btn btn-default">{{ isset($user_edit) ? 'Cập nhật' : 'Thêm' }}</button>
                 <a href="{{ url('admin/danhmuc/nguoiky') }}" class="btn btn-default">Làm mới</a>
             </form>
+            @endif
         </div>
         <!-- /#page-wrapper -->
 

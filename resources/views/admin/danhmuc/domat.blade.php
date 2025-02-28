@@ -74,17 +74,20 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+            @if(Auth::user()->level == 2)
+
             <form action="{{ isset($domat_edit) ? 'admin/danhmuc/domat/sua/' . $domat_edit->id : 'admin/danhmuc/domat/them' }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label>{{ isset($domat_edit) ? 'Sửa độ mật' : 'Thêm độ mật' }}</label>
                     <input class="form-control" name="Ten" placeholder="Nhập tên độ mật" style="width: 40%;"
-                           value="{{ isset($domat_edit) ? $domat_edit->name : '' }}" />
+                    value="{{ isset($domat_edit) ? $domat_edit->name : '' }}" />
                 </div>
-            
+                
                 <button type="submit" class="btn btn-default">{{ isset($domat_edit) ? 'Cập nhật' : 'Thêm' }}</button>
                 <a href="{{ url('admin/danhmuc/domat') }}" class="btn btn-default">Làm mới</a>
             </form>
+            @endif
             
         </div>
         <!-- /#page-wrapper -->

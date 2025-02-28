@@ -23,7 +23,7 @@
 
 
 
-                        @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4 ||Auth::user()->level == 5)
+                        {{-- @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4 ||Auth::user()->level == 5 || Auth::user()->level == 6) --}}
                         <li>
                             <a href="admin/danhmuc/"><i class="fa-solid fa-list-ul"></i> Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -49,12 +49,12 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        @endif
+                        {{-- @endif --}}
                       
                         <li>
                             <a href="#"><i class="fa-solid fa-down-long"></i>   Văn bản đến<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               @if (Auth::user()->level == 3 || Auth::user()->level == 2 || Auth::user()->level == 4  )
+                               @if (Auth::user()->level == 3 || Auth::user()->level == 2 )
                                <li>
                                    <a href="admin/vanbanden/vaosoden">Vào sổ văn bản</a>
                                 </li>
@@ -62,12 +62,12 @@
                                     <a href="admin/vanbanden/hoanthanh">Lưu hồ sơ văn bản</a>
                                  </li>
                                 @endif
-                                @if(Auth::user()->level == 4 || Auth::user()->level == 2 )
+                                @if(Auth::user()->level == 4 || Auth::user()->level == 2  )
                                 <li>
-                                    <a href="admin/vanbanden/chuyen">Trình chuyển văn bản sổ văn bản</a>
+                                    <a href="admin/vanbanden/chuyen">Trình chuyển văn bản</a>
                                 </li> 
                                 @endif
-                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
+                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5 || Auth::user()->level == 6)
                                 <li>
                                     <a href="admin/vanbanden/butphe">Bút phê văn bản</a>
                                 </li>  
@@ -79,30 +79,36 @@
                                 </li>
                                 <li>
                                     <a href="admin/vanbanden/quahan">Văn bản quán hạn</a>
-                                </li> 
+                                </li>
                                 @endif
-                               
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa-solid fa-up-long"></i>   Văn bản đi<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               
-                                <li>
-                                    <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
+                               @if(Auth::user()->level == 2 || Auth::user()->level == 1)
+                               <li>
+                                   <a href="admin/vanbandi/vaosodi">Vào sổ văn bản</a>
                                 </li>
-                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
+                                @endif
+                                @if(Auth::user()->level == 2 || Auth::user()->level == 4)
+                               <li>
+                                   <a href="admin/vanbandi/chuyen">Trình chuyển văn bản</a>
+                                </li>
+                                @endif
+                                
+                                @if(Auth::user()->level == 2 ||Auth::user()->level == 5 || Auth::user()->level == 6 )
                                 <li>
                                     <a href="admin/vanbandi/pheduyetdi">Phê duyệt văn bản đi</a>
                                 </li>
-                                @endif 
-                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
+                                @endif
+                                {{-- @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5 || Auth::user()->level == 6 || Auth::user()->level == 3) --}}
                                 <li>
                                     <a href="admin/vanbandi/danhsach">Danh sách văn bản đi</a>
                                 </li>
-                                @endif
-                                @if(Auth::user()->level == 3 || Auth::user()->level == 3 ||Auth::user()->level == 5)
+                                {{-- @endif --}}
+                                @if(Auth::user()->level == 3 || Auth::user()->level == 2 )
                                 <li>
                                     <a href="admin/vanbandi/hoanthanh">Lưu hồ sơ văn bản</a>
                                 </li>
@@ -113,16 +119,16 @@
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Văn bản nội bộ<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               @if(Auth::user()->level == 3 )
-                               <li>
+                               @if(Auth::user()->level != 3)
+                                <li>
                                    <a href="admin/vanbannoibo/vaosonoibo">Vào sổ văn bản nội bộ</a>
-                                </li> 
+                                </li>
                                 @endif
-                                @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5)
+                                {{-- @if(Auth::user()->level == 1 || Auth::user()->level == 2 ||Auth::user()->level == 5 || Auth::user()->level == 6) --}}
                                 <li>
                                     <a href="admin/vanbannoibo/pheduyet">Xử lý văn bản nội bộ</a>
                                 </li>
-                                @endif 
+                                {{-- @endif  --}}
                                 <li>
                                     <a href="admin/vanbannoibo/danhsach">Danh sách văn bản nội bộ</a>
                                 </li>

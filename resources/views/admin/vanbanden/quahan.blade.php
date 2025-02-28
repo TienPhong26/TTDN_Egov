@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách văn bản đang chờ xử lý
+Danh sách văn bản quá hạn
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@ Danh sách văn bản đang chờ xử lý
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Danh sách văn bản đang xử lý
+                        <h1 class="page-header">Danh sách văn bản quá hạn
                           
                         </h1>
                     </div>

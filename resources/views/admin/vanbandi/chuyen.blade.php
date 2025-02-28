@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Danh sách văn bản đi
+Phê duyêt văn bản đi
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@ Danh sách văn bản đi
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Danh sách văn bản đi
+                        <h1 class="page-header">Danh sách văn bản chờ phê duyệt
                           
                         </h1>
                     </div>
@@ -55,7 +55,8 @@ Danh sách văn bản đi
                                 <th>Đính kèm</th>
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Ghi chú</th>
-                                <th>Trạng thái</th>
+                                <th></th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -92,35 +93,16 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                         @else
                                             <td>Không tìm thấy người ký</td>
                                         @endif
+
                                         <td><a href="{{ asset($value->ten_file) }}" target="_blank">File</a></td>
-                                        <td>{{$value->ghichu}}</td>
-                                        
-                                        @switch($value->action)
-                                            @case('pending')
-                                                <td>Chờ kiểm tra</td>
-                                                @break
-
-                                            @case('next')
-                                                <td>Chờ phê duyệt</td>
-                                                @break
-
-                                            @case('resend')
-                                            @case('resend1')
-                                                <td>Gửi đơn vị sửa lại</td>
-                                                @break
-
-                                            @case('done')
-                                                <td>Hoàn thành</td>
-                                                @break
-                                        @endswitch
-
+                                        <td>{{ $value->ghichu }}</td>
+                                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbandi/chuyenvbdi/{{ $value->id }}">Phê duyệt</a></td>
                                         
                                     </tr>
                                 @endforeach
                                 @else
                                 <tr><td colspan="7">Không có dữ liệu</td></tr>
                                 @endif
-
                         </tbody>
                     </table>
                 </div>

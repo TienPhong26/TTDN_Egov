@@ -88,6 +88,7 @@
                             </div>
                         </td>
                     </tr>
+                    @if(Auth::user()->level == 2 || Auth::user()->level ==5)
                     <tr>
                         <td>
                             <div class="form-group" style="width: 400px;">
@@ -116,11 +117,12 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
                 </table>
-    
                 
-                
+                @if(Auth::user()->level == 2 || Auth::user()->level ==5)
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-nib"></i> Phê duyệt</button>
+                @endif
                 <button type="submit" name="hoanthanh" value="true" class="btn btn-success">
                     <i class="fa-solid fa-check"></i> Hoàn thành
                 </button>
@@ -128,13 +130,8 @@
             </form>
         </div>
         <div class="form-group">
-            <label></label><br>
-            <a href="{{ asset($vanbanden->ten_tep) }}" >{{ $vanbanden->ten_tep }}</a><br>
-            
-            {{-- Kiểm tra xem file có phải là hình ảnh không --}}
-            @if(in_array(strtolower(pathinfo($vanbanden->ten_tep, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'gif', 'bmp']))
-                <img src="{{ asset($vanbanden->ten_tep) }}" alt="File Image" style="max-width: 100%; height: auto; margin-top: 10px;">
-            @endif
+            <br>
+            <iframe src="{{ asset($vanbanden->ten_tep) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
         </div>
         
     </div>

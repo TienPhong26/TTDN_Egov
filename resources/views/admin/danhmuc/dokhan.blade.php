@@ -74,6 +74,9 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
+            @if ( Auth::user()->level == 2)
+            
+            
             <form action="{{ isset($dokhan_edit) ? 'admin/danhmuc/dokhan/sua/' . $dokhan_edit->id : 'admin/danhmuc/dokhan/them' }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
@@ -85,7 +88,7 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                 <button type="submit" class="btn btn-default">{{ isset($dokhan_edit) ? 'Cập nhật' : 'Thêm' }}</button>
                 <a href="{{ url('admin/danhmuc/dokhan') }}" class="btn btn-default">Làm mới</a>
             </form>
-            
+            @endif
         </div>
         <!-- /#page-wrapper -->
 

@@ -74,9 +74,6 @@
                         </td>
                     </tr>
                 </table>
-              
-                
-              
                 <div class="form-group">
                     <label>Trích Yếu:</label>
                     <textarea class="form-control " style="width: 600px;" rows="3" readonly >{{ $vanbanden->trich_yeu }}</textarea>
@@ -103,6 +100,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Trình phê duyệt</button>
                 <a href="{{ url('admin/vanbanden/chuyen') }}" class="btn btn-default" class="btn btn-primary">Quay lại</a>
+                <div class="form-group">
+                    <br>
+                    <iframe src="{{ asset($vanbanden->ten_tep) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>
+                </div>
             </form>
         </div>
     </div>

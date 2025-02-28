@@ -54,8 +54,8 @@ Bút phê văn bản
                                 <th>Đính kèm</th>
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Trạng thái</th>
-                                <th></th>   
-                                <th></th>
+                                <th>Xử lý</th>   
+                                <th>Giao xử lý</th>
                             </tr>
                         </thead>
                         <tbody>

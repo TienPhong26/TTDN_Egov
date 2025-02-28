@@ -30,7 +30,7 @@ class VanBanDiController extends Controller
     public function postThem(Request $request) {
         $this->validate($request, [
             'sohieu' => 'required|min:3|max:15',
-            'trichyeu' => 'required|min:10|max:255',
+            'trichyeu' => 'required|min:1|max:255',
             'FileVanBan' => 'nullable|mimes:pdf|max:2048',
         ], [
             'sohieu.required' => 'Bạn phải nhập số hiệu',
@@ -89,7 +89,8 @@ class VanBanDiController extends Controller
 
     public function getDanhSach() {
         // Lấy tất cả các bản ghi có cột action là 'pending'
-        $vanbandi= VanBanDi::where('action', 'done')->get();
+        //$vanbandi= VanBanDi::where('action', 'done')->get();
+        $vanbandi= VanBanDi::all();
         $user = User::all();
         return view('admin.vanbandi.danhsach', ['vanbandi' => $vanbandi, 'user' => $user]);
     }
@@ -101,17 +102,19 @@ class VanBanDiController extends Controller
     }
     public function getPheDuyet() {
         // Lấy tất cả các bản ghi có cột action là 'pending'
-        $vanbandi= VanBanDi::where('action', 'pending')->get();
+        $vanbandi= VanBanDi::where('action', 'next')->get();
         $user = User::all();
         return view('admin.vanbandi.pheduyetdi', ['vanbandi' => $vanbandi, 'user' => $user]);
+    }
+    public function getChuyen() {
+        // Lấy tất cả các bản ghi có cột action là 'pending'
+        $vanbandi= VanBanDi::where('action', 'pending')->get();
+        $user = User::all();
+        return view('admin.vanbandi.chuyen', ['vanbandi' => $vanbandi, 'user' => $user]);
     }
 
     public function getPheDuyetDi($id) {
 		$vanbandi = VanBanDi::find($id);
-	//	$coquanbanhanh = CoQuanBanHanh::all();
-	//	$hinhthucvanban = HinhThucVanBan::all();
-	//	$linhvuc = LinhVuc::all();
-	//	$loaihinhvanbanden = LoaiHinhVanBanDen::all();
 		$loaivanban = LoaiVanBan::all();
         $donvi = Donvi::all();
         //$user = User::all();
@@ -119,7 +122,15 @@ class VanBanDiController extends Controller
 
 		return view('admin.vanbandi.pheduyetvbdi', ['vanbandi' => $vanbandi, 'user' => $user,'donvi'=>$donvi]);
     }
+    public function getChuyenvbdi($id) {
+		$vanbandi = VanBanDi::find($id);
+		$loaivanban = LoaiVanBan::all();
+        $donvi = Donvi::all();
+        //$user = User::all();
+        $user = User::whereIn('role', ['pofficer','sofficer'])->get();
 
+		return view('admin.vanbandi.chuyenvbdi', ['vanbandi' => $vanbandi, 'user' => $user,'donvi'=>$donvi]);
+    }
     public function postPheDuyetDi(Request $request, $id) {
         $vanbandi = VanBanDi::find($id);
       //  $ykien = NhanYKien::all();
@@ -158,6 +169,38 @@ class VanBanDiController extends Controller
         // $ykien->save();
     //    dd($request->all());
         return redirect('admin/vanbandi/pheduyetdi')->with('thongbao', 'Phê duyệt thành công');
+    }
+    public function postChyenvbdi(Request $request, $id) {
+        $vanbandi = VanBanDi::find($id);
+      //  $ykien = NhanYKien::all();
+        if (!$vanbandi) {
+            return redirect()->back()->with('error', 'Văn bản không tồn tại');
+        }
+    
+        if ($request->has('guilai') && $request->guilai == 'true') {
+            // Xử lý khi người dùng nhấn "gửi lạih"
+            
+            $vanbandi->action = 'resend1';
+            $vanbandi->save();
+            $request->validate([
+              //  'donvi' => 'required|exists:donvi_table,id',  // Điều chỉnh bảng cho phù hợp
+                'y_kien' => 'required|string|max:500'  // Kiểm tra y_kien có giá trị và không trống
+            ]);
+            
+            $ykien = new NhanYKien();
+            $ykien->id_nguoinhan = '1';
+            $ykien->id_donvi = $request->donvi;
+            $ykien->y_kien = $request->y_kien;
+            $ykien->save();
+            // Bạn có thể thêm logic ở đây nếu cần
+            return redirect('admin/vanbandi/chuyenvbdi/'.$id)->with('thongbao', 'Hoàn thành gửi lại');
+        }
+        
+        // Logic phê duyệt thông thường
+        $vanbandi->action = 'next';
+        //$vanbandi->id_nguoinhan = $request->nguoinhan;
+        $vanbandi->save();
+        return redirect('admin/vanbandi/chuyen')->with('thongbao', 'Phê duyệt thành công');
     }
 
     public function downloadFile($id)
