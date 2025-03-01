@@ -1,15 +1,24 @@
-﻿cách fix lỗi connect database: thêm dòng 'options'   => [PDO::ATTR_EMULATE_PREPARES => true] vào thư mục conf/database.php
+﻿---Level của các role---
+Văn thư level =3 ;
+thư ký level =4;
+hiêu trưởng =5 ;
+phó hiệu trưởng  =6
+trưởng đv =1 ; 
+cá nhân =7 ;
+admin  = 2;
 
-Tạo database với tên là congvanlaravel, import file.sql trong thư mục DBImport vào!
-Trang chủ là public/trangchu
-trang quản trị: public/admin
-tải khoản: 
-nhanvien@quanlycongvan.com
-admin@quanlycongvan.com
-superadmin@quanlycongvan.com
-mật khẩu: 123456 
-*****************
-Liên hệ tác giả:
-Nguyễn Minh Hoàng
-emai: hoang1501106004@vnkgu.edu.vn
-phone: 01656987140
+quy trình xử lý văn bản đến :
+pending -arrvoid - next -next2 -done
+
+
+tài khoản các user 
+
+vanthu@gmail.com
+thuky@gmail.com
+hiệu trưởng : thuckx@gmail.com
+phó hiện trưởng : thiennv@gmail.com
+nhân viên : nv@gmail.com
+trưởng đơn vị : truongdv@gmail.com
+admin : admin@gmail.com
+
+password :123456

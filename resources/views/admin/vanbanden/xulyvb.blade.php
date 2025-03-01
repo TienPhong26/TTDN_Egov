@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('title')
-Bút phê văn bản
+Xử lý văn bản
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@ Bút phê văn bản
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Văn bản chờ phê duyệt
+                        <h1 class="page-header">Xử lý văn bản
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -55,7 +55,9 @@ Bút phê văn bản
                                 {{-- <th>Nội dung lãnh đạo</th> --}}
                                 <th>Trạng thái</th>
                                 <th>Xử lý</th>   
+                                @if(Auth::user()->level != 7)
                                 <th>Giao xử lý</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -83,27 +85,11 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
                                     <td>{{ $value->trich_yeu }}</td>
                                     <td>{{ $value->thoi_han_hoan_thanh }}</td>
                                     <td><a href="{{ asset($value->ten_tep) }}" target="_blank">File</a></td>
-                                    {{-- <td>{{ Carbon\Carbon::parse($value->ngayky)->format('d/m/Y') }}</td>
-                                    <td>{{ $value->trichyeunoidung }}</td> --}}
-                                    <!-- kiểm tra ngaychuyen khác null -->
-                                    {{-- @if($value->ngaychuyen != '')
-                                        <td>{{ Carbon\Carbon::parse($value->ngaychuyen)->format('d/m/Y') }}</td>
-                                    @else
-                                        <td>-</td>
-                                    @endif --}}
-
-                                    {{-- <td>{{ $value->loaihinhvanbanden->name }}</td> --}}
-
-                                    {{-- <td>{{ $value->coquanbanhanh->name }}</td>
-                                    <td>{{ $value->hinhthucvanban->name }}</td>
-                                    <td>{{ $value->linhvuc->name }}</td>
-                                  / <td>{{ $value->loaivanban->name }}</td> --}}
                                     <td>Chờ xử lý</td>
                                     <td class="center"><a href="admin/vanbanden/pheduyetvanban/{{ $value->id }}"><i class="fa-solid fa-pen"></i></a></td>
-                                    {{-- <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/vanbanden/chuyen/sua/{{ $value->id }}">Sửa</a></td> --}}
+                                    @if(Auth::user()->level != 7)
                                     <td class="center"><a href="admin/vanbanden/giaoxuly/{{ $value->id }}"><i class="fa-solid fa-share"></i></a></td>
-
-                                   
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -114,4 +100,6 @@ if (isset($_GET['page']) && $_GET['page'] != 1) {
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+
+
 @endsection

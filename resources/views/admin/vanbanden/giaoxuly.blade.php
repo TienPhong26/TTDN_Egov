@@ -82,7 +82,12 @@
                         </td>
                         <td>
                             <div class="form-group">
-                                <label>Bút phê:</label>
+                                @if(Auth::user()->level == 1)
+                                    <label>Nội dung xử lý:</label>
+                                @endif
+                                @if(Auth::user()->level != 1)
+                                    <label>Bút phê:</label>
+                                @endif
                                 <textarea class="form-control " style="width: 400px;" rows="3" id="butphe" name="butphe"></textarea>
                                 {{-- <input type="text" class="form-control" value="{{ $vanbanden->trich_yeu }}" readonly> --}}
                             </div>
@@ -97,17 +102,32 @@
                         </td>
                     </tr>
                     <tr>
+                        @if (Auth::user()->level == 1)
+                        <td>
+                            <div class="form-group" style="width:250px; ">
+                                <label>Người xử lý</label>
+                                <select class="form-control"  id="nguoixuly" name="nguoixuly">
+                                    <option value="">--Chọn--</option>
+                                    @foreach($nguoixuly as $us)
+                                    <option value="{{ $us->id }}">{{ $us->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        @endif
+                        @if (Auth::user()->level != 1)
                         <td>
                             <div class="form-group" style="width:250px; ">
                                 <label>Đơn vị chủ trì</label>
                                 <select class="form-control"  id="donvi" name="donvi">
                                     <option value="">--Chọn--</option>
                                     @foreach($donvi as $dv)
-                                        <option value="{{ $dv->id }}">{{ $dv->name }}</option>
+                                    <option value="{{ $dv->id }}">{{ $dv->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </td>
+                        @endif
                         <td>
                             <div class="form-group">
                                 <label>File Đính Kèm:</label><br>
@@ -117,7 +137,12 @@
                     </tr>
                 </table>
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Giao xử lý</button>
+                @if(Auth::user()->level != 1)
                 <a href="{{ url('admin/vanbanden/butphe') }}" class="btn btn-default" class="btn btn-primary">Quay lại</a>
+                @endif
+                @if(Auth::user()->level == 1)
+                <a href="{{ url('admin/vanbanden/xulyvb') }}" class="btn btn-default" class="btn btn-primary">Quay lại</a>
+                @endif
                 <div class="form-group">
                     <br>
                     <iframe src="{{ asset($vanbanden->ten_tep) }}" width="60%" height="800px" style="margin-left: 15%;"></iframe>

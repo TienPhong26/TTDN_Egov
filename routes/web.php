@@ -153,6 +153,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 		Route::post('pheduyetvanban/{id}', 'VanBanDenController@postPheDuyetVanBan');
 
 		Route::post('butphe', 'VanBanDenController@postHoanThanh');
+		
+		Route::get('xulyvb', 'VanBanDenController@getXuLyVb');
 
 		
 		Route::get('giaoxuly/{id}', 'VanBanDenController@getXuly')->name('admin.vanbanden.giaoxuly');
